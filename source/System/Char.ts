@@ -1,7 +1,7 @@
 /*!
  * @author electricessence / https://github.com/electricessence/
  * From Netjs mscorlib.ts
- * Licensing: MIT https://github.com/electricessence/TypeScript.NET/blob/master/LICENSE.md
+ * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
 export function isWhiteSpace(ch:number):boolean

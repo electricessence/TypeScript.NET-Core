@@ -1,7 +1,7 @@
 /*!
  * @author electricessence / https://github.com/electricessence/
  * Named groups based on: http://trentrichardson.com/2011/08/02/javascript-regexp-match-named-captures/
- * Licensing: MIT https://github.com/electricessence/TypeScript.NET/blob/master/LICENSE.md
+ * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 // NOTE: Avoid real (types/interfaces only = ok) dependencies so this class can be used cleanly.
 import IMap from "../../IMap";
