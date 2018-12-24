@@ -7,7 +7,7 @@
     "sourceMap": true,
     "removeComments": false,
     "moduleResolution": "node",
-    "noEmitHelpers": true,
+    "importHelpers": true,
     "noEmit": true
   },
   "exclude": [
