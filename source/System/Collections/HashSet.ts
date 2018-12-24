@@ -10,12 +10,9 @@ import {ILinkedNodeWithValue} from "./ILinkedListNode";
 import {EqualityComparison, HashSelector} from "../FunctionTypes";
 import ArgumentNullException from "../Exceptions/ArgumentNullException";
 import FiniteEnumerableOrArrayLike from "./FiniteEnumerableOrArrayLike";
-import __extendsImport from "../../extends";
 import {areEqual} from "../Compare";
 import LinkedNodeList from "./LinkedNodeList";
 import ObjectPool from "../Disposable/ObjectPool";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 
 const VOID0:undefined = void 0;
@@ -74,7 +71,7 @@ export class HashSet<T>
 		const _ = this;
 		const type = typeof item;
 		const key = _._hashGenerator(item);
-		let r = _._registry, t = r && r[type], list = t && t[key];
+		let r = _._registry, t = r && r[type], list = t && t[<any>key];
 		const comparer = this._comparer;
 		const listNode = list && list.find(e => comparer(e.value.value, item));
 
@@ -94,7 +91,7 @@ export class HashSet<T>
 
 			if(!list)
 			{
-				t[key] = list = bucketPool.take();
+				t[<any>key] = list = bucketPool.take();
 			}
 
 			const node:ILinkedNodeWithValue<T> = {value: item};
@@ -125,7 +122,7 @@ export class HashSet<T>
 	{
 		const r = this._registry,
 		      t = r && r[typeof item],
-		      list = t && t[this._hashGenerator(item)];
+		      list = t && t[<any>this._hashGenerator(item)];
 
 		if(!list) return VOID0;
 

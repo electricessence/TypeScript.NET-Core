@@ -5,7 +5,7 @@
 
 import {Primitive} from "../Primitive";
 import {ISerializable} from "../Serialization/ISerializable";
-import {IMap} from "../../IMap";
+import IMap from "../../IMap";
 
 export module UriComponent {
 	export interface Formattable

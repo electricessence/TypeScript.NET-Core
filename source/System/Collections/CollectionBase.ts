@@ -11,14 +11,9 @@ import DisposableBase from "../Disposable/DisposableBase";
 import ICollection from "./ICollection";
 import {FiniteIEnumerator} from "./Enumeration/IEnumerator";
 import IEnumerateEach from "./Enumeration/IEnumerateEach";
-import {Action, ActionWithIndex, EqualityComparison, PredicateWithIndex} from "../FunctionTypes";
+import {ActionWithIndex, EqualityComparison, PredicateWithIndex} from "../FunctionTypes";
 import ArrayLikeWritable from "./Array/ArrayLikeWritable";
-import {LinqEnumerable} from "../../System.Linq/Linq";
-import {isCommonJS, isNodeJS, isRequireJS} from "../Environment";
-import __extendsImport from "../../extends";
 import FiniteEnumerableOrEnumerator from "./Enumeration/FiniteEnumerableOrEnumerator";
-//noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 //noinspection SpellCheckingInspection
 const
@@ -29,7 +24,8 @@ const
 	LINQ_PATH = "../../System.Linq/Linq";
 
 export abstract class CollectionBase<T>
-extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
+	extends DisposableBase
+	implements ICollection<T>, IEnumerateEach<T>
 {
 
 	protected constructor(
@@ -64,7 +60,7 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 		return this.getIsReadOnly();
 	}
 
-	protected assertModifiable():true|never
+	protected assertModifiable():true | never
 	{
 		this.throwIfDisposed(CMDC);
 		if(this.getIsReadOnly())
@@ -75,7 +71,7 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 	protected _version:number; // Provides an easy means of tracking changes and invalidating enumerables.
 
 
-	protected assertVersion(version:number):true|never
+	protected assertVersion(version:number):true | never
 	{
 		if(version!==this._version)
 			throw new InvalidOperationException("Collection was modified.");
@@ -135,7 +131,8 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 
 		try
 		{
-			if(updated = closure())
+			updated = closure();
+			if(updated)
 				_._modifiedCount++;
 		}
 		finally
@@ -192,7 +189,10 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 
 		let n:number = NaN;
 		try
-		{ if(n = _._removeInternal(entry, max)) _._modifiedCount++; }
+		{
+			n = _._removeInternal(entry, max);
+			if(n) _._modifiedCount++;
+		}
 		finally
 		{ _._updateRecursion--; }
 
@@ -214,7 +214,10 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 
 		let n:number = NaN;
 		try
-		{ if(n = _._clearInternal()) _._modifiedCount++; }
+		{
+			n = _._clearInternal();
+			if(n) _._modifiedCount++;
+		}
 		finally
 		{ _._updateRecursion--; }
 
@@ -230,12 +233,9 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 		this._version = 0;
 		this._updateRecursion = 0;
 		this._modifiedCount = 0;
-		const l:any = this._linq; // TODO: undo any
-		this._linq = void 0;
-		if(l) l.dispose();
 	}
 
-	protected _importEntries(entries:FiniteEnumerableOrEnumerator<T>|null|undefined):number
+	protected _importEntries(entries:FiniteEnumerableOrEnumerator<T> | null | undefined):number
 	{
 		let added = 0;
 		if(entries)
@@ -250,8 +250,7 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 			}
 			else
 			{
-				forEach(entries, e =>
-				{
+				forEach(entries, e => {
 					if(this._addInternal(e)) added++;
 				});
 			}
@@ -273,7 +272,10 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 
 		let n:number = NaN;
 		try
-		{ if(n = _._importEntries(entries)) _._modifiedCount++; }
+		{
+			n = _._importEntries(entries);
+			if(n) _._modifiedCount++;
+		}
 		finally
 		{ _._updateRecursion--; }
 
@@ -301,8 +303,7 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 		let result:T[] = [];
 		if(count)
 		{
-			this.forEach((e, i) =>
-			{
+			this.forEach((e, i) => {
 				if(predicate(e, i))
 					result.push(e);
 			});
@@ -418,81 +419,6 @@ extends DisposableBase implements ICollection<T>, IEnumerateEach<T>
 		return count
 			? this.copyTo(count>65536 ? new Array<T>(count) : [])
 			: [];
-	}
-
-	private _linq?:LinqEnumerable<T>;
-
-	/**
-	 * .linq will return an LinqEnumerable if .linqAsync() has completed successfully or the default module loader is NodeJS+CommonJS.
-	 * @returns {LinqEnumerable}
-	 */
-	get linq():LinqEnumerable<T>
-	{
-		this.throwIfDisposed();
-		let e = this._linq;
-
-		if(!e)
-		{
-
-			let r:any;
-			try { r = eval('require'); } catch (ex) {}
-
-			this._linq = e = r && r(LINQ_PATH).default.from(this);
-			if(!e)
-			{
-				throw isRequireJS
-					? `using .linq to load and initialize a LinqEnumerable is currently only supported within a NodeJS environment.
-Import System.Linq/Linq and use Enumerable.from(e) instead.
-You can also preload the Linq module as a dependency or use .linqAsync(callback) for AMD/RequireJS.`
-					: "There was a problem importing System.Linq/Linq"
-			}
-		}
-
-		return e;
-	}
-
-	// noinspection JSUnusedGlobalSymbols
-	/**
-	 * .linqAsync() is for use with deferred loading.
-	 * Ensures an instance of the Linq extensions is available and then passes it to the callback.
-	 * Returns an LinqEnumerable if one is already available, otherwise undefined.
-	 * Passing no parameters will still initiate loading and initializing the LinqEnumerable which can be useful for pre-loading.
-	 * Any call to .linqAsync() where an LinqEnumerable is returned can be assured that any subsequent calls to .linq will return the same instance.
-	 * @param callback
-	 * @returns {LinqEnumerable}
-	 */
-	linqAsync(callback?:Action<LinqEnumerable<T>>):LinqEnumerable<T>|undefined
-	{
-		this.throwIfDisposed();
-		let e = this._linq;
-
-		if(!e)
-		{
-			if(isRequireJS)
-			{
-				eval("require")([LINQ_PATH], (linq:any) =>
-				{
-					// Could end up being called more than once, be sure to check for ._linq before setting...
-					e = this._linq;
-					if(!e) this._linq = e = linq.default.from(this);
-					if(!e) throw "There was a problem importing System.Linq/Linq";
-					if(callback) callback(e);
-					callback = void 0; // In case this is return synchronously..
-				});
-			}
-			else if(isNodeJS && isCommonJS)
-			{
-				e = this.linq;
-			}
-			else
-			{
-				throw "Cannot find a compatible loader for importing System.Linq/Linq";
-			}
-		}
-
-		if(e && callback) callback(e);
-
-		return e;
 	}
 }
 

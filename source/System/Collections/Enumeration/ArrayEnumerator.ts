@@ -6,9 +6,6 @@
 import IndexEnumerator from "./IndexEnumerator";
 import {Type} from "../../Types";
 
-import __extendsImport from "../../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 export class ArrayEnumerator<T>
 	extends IndexEnumerator<T>

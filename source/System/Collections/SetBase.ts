@@ -17,9 +17,6 @@ import {FiniteIEnumerator} from "./Enumeration/IEnumerator";
 import FiniteEnumerableOrArrayLike from "./FiniteEnumerableOrArrayLike";
 import ISet from "./ISet";
 
-import __extendsImport from "../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 const VOID0:undefined = void 0;
 const OTHER = 'other';

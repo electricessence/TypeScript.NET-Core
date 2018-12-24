@@ -11,10 +11,7 @@ import TimeQuantity from "./TimeQuantity";
 import {Milliseconds, Ticks} from "./HowMany";
 import ITimeMeasurement from "./ITimeMeasurement";
 import ITimeQuantity from "./ITimeQuantity";
-import __extendsImport from "../../extends";
 import Lazy from "../Lazy";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 
 /**

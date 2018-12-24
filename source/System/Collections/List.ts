@@ -14,10 +14,7 @@ import FiniteEnumerableOrArrayLike from "./FiniteEnumerableOrArrayLike";
 import IList from "./IList";
 import ArrayLikeWritable from "./Array/ArrayLikeWritable";
 
-import __extendsImport from "../../extends";
 import {FiniteEnumeratorBase} from "./Enumeration/EnumeratorBase";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 const VOID0:undefined = void 0;
 export class List<T>

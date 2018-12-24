@@ -10,9 +10,6 @@ import Primitive from "../Primitive";
 import FiniteEnumerableOrArrayLike from "./FiniteEnumerableOrArrayLike";
 import HashSet from "./HashSet";
 
-import __extendsImport from "../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 
 

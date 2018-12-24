@@ -8,15 +8,10 @@
     "removeComments": false,
     "moduleResolution": "node",
     "importHelpers": true,
-    "noEmit": true
+    "noEmit": true,
+    "outDir": "./dist"
   },
-  "exclude": [
-    "typings",
-    "tests",
-    "node_modules",
-    "bower_components",
-    "dist",
-    ".nuget",
-    "documentation"
+  "include": [
+    "source"
   ]
 }

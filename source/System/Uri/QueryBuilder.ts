@@ -9,9 +9,6 @@ import {isFiniteEnumerableOrArrayLike} from "../Collections/Enumeration/Enumerat
 import UriComponent from "./UriComponent";
 import QueryParam from "./QueryParam";
 import {encode, parse} from "./QueryParams";
-import __extendsImport from "../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 
 /**

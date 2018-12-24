@@ -5,10 +5,7 @@
 
 import IIterator from "./IIterator";
 import SimpleEnumeratorBase from "./SimpleEnumeratorBase";
-import __extendsImport from "../../../extends";
 import {EndlessIEnumerator, FiniteIEnumerator} from "./IEnumerator";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 /**
  * A simplified stripped down enumerator that until disposed will infinitely return the provided factory.

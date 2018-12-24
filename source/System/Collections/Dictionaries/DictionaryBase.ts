@@ -13,13 +13,10 @@ import {extractKeyValue} from "../../KeyValueExtract";
 import {KeyValuePair, KeyValuePairOrTuple} from "../../KeyValuePair";
 import IDictionary from "./IDictionary";
 import {FiniteIEnumerator, IEnumerator} from "../Enumeration/IEnumerator";
-import __extendsImport from "../../../extends";
 import KeyNotFoundException from "../KeyNotFoundException";
 import {Action} from "../../FunctionTypes";
 import FiniteEnumerableOrArrayLike from "../FiniteEnumerableOrArrayLike";
 import FiniteEnumerableOrEnumerator from "../Enumeration/FiniteEnumerableOrEnumerator";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 const VOID0:undefined = void 0;
 

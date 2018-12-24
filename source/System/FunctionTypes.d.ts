@@ -43,7 +43,7 @@ export interface EqualityComparison<T>
 	(a:T, b:T, strict?:boolean):boolean;
 }
 
-export interface HashSelector<T> extends Selector<T, string | number>
+export interface HashSelector<T> extends Selector<T, string | number | symbol>
 {
 
 }

@@ -6,9 +6,6 @@
 import SimpleEnumeratorBase from "./SimpleEnumeratorBase";
 import {EndlessIEnumerator} from "./IEnumerator";
 
-import __extendsImport from "../../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 /**
  * An aggregate/reduce style factory function that expects a previous value and the current index of the enumeration.

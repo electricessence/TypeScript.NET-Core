@@ -4,9 +4,6 @@
  */
 
 import {FiniteEnumeratorBase} from "./EnumeratorBase";
-import __extendsImport from "../../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 export interface IndexEnumeratorSource<T> {
 	source:{ [index:number]:T };
@@ -78,7 +75,6 @@ export class IndexEnumerator<T> extends FiniteEnumeratorBase<T>
 				}
 			}
 		);
-		this._isEndless = false;
 	}
 }
 

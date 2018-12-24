@@ -12,9 +12,6 @@ import deferImmediate from "../deferImmediate";
 import {isNodeJS} from "../../Environment";
 import ObjectPool from "../../Disposable/ObjectPool";
 import IMap from "../../../IMap";
-import __extendsImport from "../../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 declare const navigator:any;
 declare const __dirname:string;

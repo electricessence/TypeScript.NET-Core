@@ -14,9 +14,6 @@ import {FiniteEnumeratorBase} from "./Enumeration/EnumeratorBase";
 import InvalidOperationException from "../Exceptions/InvalidOperationException";
 import Integer from "../Integer";
 
-import __extendsImport from "../../extends";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 export default class LazyList<T> extends ReadOnlyCollectionBase<T> implements IReadOnlyList<T>
 {

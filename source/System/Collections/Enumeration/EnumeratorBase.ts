@@ -11,10 +11,7 @@ import {EndlessIEnumerator, FiniteIEnumerator, IEnumerator} from "./IEnumerator"
 import {IIteratorResult} from "./IIterator";
 import IYield from "./IYield";
 import IteratorResult from "./IteratorResult";
-import __extendsImport from "../../../extends";
 import {Action, Closure} from "../../FunctionTypes";
-// noinspection JSUnusedLocalSymbols
-const __extends = __extendsImport;
 
 const VOID0:undefined = void 0;
 
