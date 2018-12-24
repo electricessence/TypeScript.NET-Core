@@ -1,1 +1,0 @@
-var tests = require('./tests/mocha/import-tests');
