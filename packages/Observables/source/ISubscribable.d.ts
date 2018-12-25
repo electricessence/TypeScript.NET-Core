@@ -4,7 +4,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {IDisposable} from "../Disposable/IDisposable";
+import IDisposable from "../Disposable/IDisposable";
 
 export interface ISubscribable<TSubscriber> extends IDisposable
 {

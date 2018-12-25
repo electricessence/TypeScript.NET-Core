@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-export declare const enum CompareResult {
+declare const enum CompareResult {
 	Equal   = 0,
 	Greater = 1,
 	Less    = -1

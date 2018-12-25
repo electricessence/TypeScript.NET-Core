@@ -4,7 +4,7 @@
  * Based on: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
  */
 
-import {Type} from "../Types";
+import Type from "../Types";
 import UriComponent from "./UriComponent";
 import Scheme from "./Scheme";
 import SchemeValue from "./SchemeValue";

@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../../../Types";
+import Type from "../../../Types";
 import {compare} from "../../../Compare";
 import Primitive from "../../../Primitive";
 import {Comparison, Selector} from "../../../FunctionTypes";

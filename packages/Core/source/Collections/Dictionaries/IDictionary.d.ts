@@ -4,8 +4,8 @@
  */
 
 import IMap from "../../IMap";
+import KeyValuePair from "../../KeyValuePair";
 import {ICollection} from "../ICollection";
-import {KeyValuePair, StringKeyValuePair} from "../../KeyValuePair";
 import {Action} from "../../FunctionTypes";
 
 export {IMap};
@@ -43,7 +43,7 @@ export interface IDictionary<TKey, TValue> extends ICollection<KeyValuePair<TKey
 }
 
 
-export interface IStringKeyDictionary<TValue> extends IDictionary<string, TValue>, ICollection<StringKeyValuePair<TValue>>
+export interface IStringKeyDictionary<TValue> extends IDictionary<string, TValue>
 {
 	importMap(map:IMap<TValue>):boolean;
 }

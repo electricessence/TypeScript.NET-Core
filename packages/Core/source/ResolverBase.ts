@@ -15,7 +15,7 @@ const NAME:string = "ResolverBase";
  * we have to prevent getValue from double triggering the value factory (optimistic concurrency)
  * or returning return a value that is intermediate between resolving and resolved.
  */
-export abstract class ResolverBase<T> extends DisposableBase
+export default abstract class ResolverBase<T> extends DisposableBase
 {
 
 	protected _isValueCreated:boolean|null; // null = 'creating'
@@ -113,5 +113,3 @@ export abstract class ResolverBase<T> extends DisposableBase
 	}
 
 }
-
-export default ResolverBase;

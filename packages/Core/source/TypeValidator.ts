@@ -2,6 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
+
 /**
  * A descriptor is simply a JSON tree that either has an actual value or a type that identifies what the expect type should be at that leaf in the tree.
  *
@@ -17,7 +18,7 @@
  * }
  */
 
-import {Type, TypeInfo} from "./Types";
+import Type, {TypeInfo} from "./Types";
 import {areEqual} from "./Compare";
 
 
@@ -112,7 +113,7 @@ function areInvalid(v:any, d:any)
 	return false;
 }
 
-export class TypeValidator<T>
+export default class TypeValidator<T>
 {
 	constructor(private readonly _typeDescriptor:any)
 	{
@@ -125,6 +126,4 @@ export class TypeValidator<T>
 			.contains(this._typeDescriptor);
 	}
 }
-
-export default TypeValidator;
 

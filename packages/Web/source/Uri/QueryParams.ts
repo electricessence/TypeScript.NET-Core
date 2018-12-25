@@ -6,7 +6,7 @@
 import * as Serialize from "../Serialization/Utility";
 import UriComponent from "./UriComponent";
 import QueryParam from "./QueryParam";
-import {Type} from "../Types";
+import Type from "../Types";
 import {extractKeyValue} from "../KeyValueExtract";
 import {forEach, isFiniteEnumerableOrArrayLike} from "../Collections/Enumeration/Enumerator";
 import IMap from "../IMap";

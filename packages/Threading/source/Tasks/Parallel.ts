@@ -5,7 +5,7 @@
  */
 
 import {ArrayPromise, PromiseBase, PromiseCollection, TSDNPromise} from "../../Promises/Promise";
-import {Type} from "../../Types";
+import Type from "../../Types";
 import Worker from "../Worker";
 import {WorkerLike} from "../WorkerType";
 import deferImmediate from "../deferImmediate";

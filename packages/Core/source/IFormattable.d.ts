@@ -6,10 +6,8 @@
  */
 
 
-import {IFormatProvider} from "./IFormatProvider";
-export interface IFormattable
+import IFormatProvider from "./IFormatProvider";
+export default interface IFormattable
 {
 	toString(format?:string, formatProvider?:IFormatProvider):string;
 }
-
-export default IFormattable;

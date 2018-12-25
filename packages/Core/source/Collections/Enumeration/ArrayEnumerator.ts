@@ -4,7 +4,7 @@
  */
 
 import IndexEnumerator from "./IndexEnumerator";
-import {Type} from "../../Types";
+import Type from "../../Types";
 
 
 export class ArrayEnumerator<T>

@@ -5,9 +5,7 @@
  * Source: http://referencesource.microsoft.com/#mscorlib/system/IEquatable.cs
  */
 
-export interface IEquatable<T>
+export default interface IEquatable<T>
 {
 	equals(other:T):boolean;
 }
-
-export default IEquatable;

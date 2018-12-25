@@ -15,6 +15,7 @@ import {ILinkedNodeList} from "./ILinkedList";
 import {FiniteIEnumerator} from "./Enumeration/IEnumerator";
 import {ActionWithIndex, PredicateWithIndex, Selector, SelectorWithIndex} from "../FunctionTypes";
 import ArrayLikeWritable from "./Array/ArrayLikeWritable";
+import IRecyclable from "../Disposable/IRecyclable";
 
 
 /*****************************
@@ -36,7 +37,7 @@ import ArrayLikeWritable from "./Array/ArrayLikeWritable";
  * The count (or length) of this LinkedNodeList is not tracked since it could be corrupted at any time.
  */
 export class LinkedNodeList<TNode extends ILinkedNode<TNode>>
-implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable
+implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclable
 {
 
 	private _first:TNode|null;
@@ -180,6 +181,14 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable
 	 * Clears the list.
 	 */
 	dispose():void
+	{
+		this.clear();
+	}
+
+	/**
+	 * Clears the list.
+	 */
+	recycle():void
 	{
 		this.clear();
 	}

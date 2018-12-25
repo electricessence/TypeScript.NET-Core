@@ -4,13 +4,11 @@
  */
 
 
-import {IDisposable} from "./Disposable/IDisposable";
-import {IEquatable} from "./IEquatable";
+import IDisposable from "./Disposable/IDisposable";
+import IEquatable from "./IEquatable";
 
-export interface ILazy<T> extends IDisposable, IEquatable<ILazy<T>>
+export default interface ILazy<T> extends IDisposable, IEquatable<ILazy<T>>
 {
 	value:T;
 	isValueCreated:boolean;
 }
-
-export default ILazy;

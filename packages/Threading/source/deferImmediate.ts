@@ -4,7 +4,7 @@
  * Based on code from: https://github.com/kriskowal/q
  */
 
-import {Type} from "../Types";
+import Type from "../Types";
 import LinkedNodeList from "../Collections/LinkedNodeList";
 import Queue from "../Collections/Queue";
 import {Closure} from "../FunctionTypes";

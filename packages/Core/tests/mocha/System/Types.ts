@@ -1,7 +1,7 @@
 ///<reference types="node"/>
 import * as assert from "assert";
 import "mocha";
-import {Type} from "../../../dist/commonjs/System/Types";
+import Type from "../../../dist/commonjs/System/Types";
 
 
 

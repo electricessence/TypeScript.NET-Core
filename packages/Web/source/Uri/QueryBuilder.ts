@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../Types";
+import Type from "../Types";
 import OrderedStringKeyDictionary from "../Collections/Dictionaries/OrderedStringKeyDictionary";
 import {isFiniteEnumerableOrArrayLike} from "../Collections/Enumeration/Enumerator";
 import UriComponent from "./UriComponent";

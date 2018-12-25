@@ -9,7 +9,7 @@ import ResolverBase from "./ResolverBase";
 
 
 // We need a non-resettable lazy to ensure it can be passed safely around.
-export class Lazy<T> extends ResolverBase<T> implements ILazy<T>
+export default class Lazy<T> extends ResolverBase<T> implements ILazy<T>
 {
 
 	constructor(valueFactory:Func<T>, trapExceptions:boolean = false, allowReset:boolean = false)
@@ -46,20 +46,3 @@ export class Lazy<T> extends ResolverBase<T> implements ILazy<T>
 	}
 
 }
-
-export class ResettableLazy<T> extends Lazy<T>
-{
-	constructor(valueFactory:Func<T>, trapExceptions:boolean = false)
-	{
-		super(valueFactory, trapExceptions, true);
-		// @ts-ignore // Force this override.
-		this._disposableObjectName = 'ResettableLazy';
-	}
-
-	static create<T>(valueFactory:Func<T>, trapExceptions:boolean = false)
-	{
-		return new ResettableLazy<T>(valueFactory, trapExceptions);
-	}
-}
-
-export default Lazy;

@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../Types";
+import Type from "../Types";
 import Primitive from "../Primitive";
 import {JsonArray, JsonMap} from "../JSON";
 import copy from "../Collections/Array/copy";

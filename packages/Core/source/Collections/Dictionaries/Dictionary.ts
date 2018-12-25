@@ -5,7 +5,7 @@
  */
 
 import {areEqual} from "../../Compare";
-import {Type} from "../../Types";
+import Type from "../../Types";
 import {FiniteEnumeratorBase} from "../Enumeration/EnumeratorBase";
 import LinkedNodeList from "../LinkedNodeList";
 import ObjectPool from "../../Disposable/ObjectPool";
@@ -51,10 +51,9 @@ function linkedNodeList(recycle?:LinkedNodeList<any>):LinkedNodeList<any> | void
 {
 	if(!linkedListPool)
 		linkedListPool
-			= new ObjectPool<LinkedNodeList<any>>(20, () => new LinkedNodeList<any>(),
-			r => r.clear());
+			= ObjectPool.createAutoRecycled(() => new LinkedNodeList<any>(), 20);
 	if(!recycle) return linkedListPool.take();
-	linkedListPool.add(recycle);
+	linkedListPool.give(recycle);
 }
 
 

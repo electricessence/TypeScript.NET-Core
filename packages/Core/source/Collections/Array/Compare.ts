@@ -4,7 +4,7 @@
  */
 
 import * as Values from "../../Compare";
-import {Type} from "../../Types";
+import Type from "../../Types";
 import Primitive from "../../Primitive";
 import {Comparison, EqualityComparison} from "../../FunctionTypes";
 import IComparable from "../../IComparable";

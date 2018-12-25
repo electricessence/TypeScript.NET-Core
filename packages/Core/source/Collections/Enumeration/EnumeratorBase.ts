@@ -3,10 +3,10 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../../Types";
+import Type from "../../Types";
 import DisposableBase from "../../Disposable/DisposableBase";
 import ObjectPool from "../../Disposable/ObjectPool";
-import IDisposable from "../../Disposable/IDisposable";
+import IRecyclable from "../../Disposable/IRecyclable";
 import {EndlessIEnumerator, FiniteIEnumerator, IEnumerator} from "./IEnumerator";
 import {IIteratorResult} from "./IIterator";
 import IYield from "./IYield";
@@ -22,13 +22,12 @@ function yielder(recycle?:Yielder<any>):void;
 function yielder(recycle?:Yielder<any>):Yielder<any>|void
 {
 	if(!yielderPool)
-		yielderPool
-			= new ObjectPool<Yielder<any>>(40, ()=>new Yielder<any>(), y=>y.yieldBreak());
+		yielderPool = ObjectPool.createAutoRecycled(()=>new Yielder<any>(), 40);
 	if(!recycle) return yielderPool.take();
-	yielderPool.add(recycle);
+	yielderPool.give(recycle);
 }
 
-class Yielder<T> implements IYield<T>, IDisposable
+class Yielder<T> implements IYield<T>, IRecyclable
 {
 	private _current:T|undefined = VOID0;
 	private _index:number = NaN;
@@ -54,7 +53,7 @@ class Yielder<T> implements IYield<T>, IDisposable
 		return false;
 	}
 
-	dispose():void
+	recycle():void
 	{
 		this.yieldBreak();
 	}

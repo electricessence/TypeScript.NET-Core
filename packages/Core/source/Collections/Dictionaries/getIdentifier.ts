@@ -4,7 +4,7 @@
  */
 
 import {IHashable, ISymbolizable} from "./IDictionary";
-import {Type} from "../../Types";
+import Type from "../../Types";
 import {Selector} from "../../FunctionTypes";
 
 const VOID0:undefined = void 0;

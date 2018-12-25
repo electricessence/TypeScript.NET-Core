@@ -7,7 +7,7 @@ import ArgumentNullException from "../Exceptions/ArgumentNullException";
 import ReadOnlyCollectionBase from "./ReadOnlyCollectionBase";
 import {FiniteIEnumerator} from "./Enumeration/IEnumerator";
 import {from as enumeratorFrom} from "./Enumeration/Enumerator";
-import {Type} from "../Types";
+import Type from "../Types";
 import IReadOnlyCollection from "./IReadOnlyCollection";
 
 

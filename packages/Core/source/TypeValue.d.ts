@@ -1,4 +1,9 @@
-export const enum TypeValue
+/*!
+ * @author electricessence / https://github.com/electricessence/
+ * Licensing: MIT
+ */
+
+declare const enum TypeValue
 {
 	Boolean = 'boolean',
 	Number = 'number',

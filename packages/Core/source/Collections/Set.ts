@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../Types";
+import Type from "../Types";
 import getIdentifier from "./Dictionaries/getIdentifier";
 import {ISymbolizable} from "./Dictionaries/IDictionary";
 import Primitive from "../Primitive";

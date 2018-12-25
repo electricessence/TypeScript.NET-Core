@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../../Types";
+import Type from "../../Types";
 import Integer from "../../Integer";
 import {areEqual} from "../../Compare";
 import ArgumentException from "../../Exceptions/ArgumentException";

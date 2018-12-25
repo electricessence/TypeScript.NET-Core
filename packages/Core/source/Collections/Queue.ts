@@ -6,7 +6,7 @@
 
 import * as AU from "./Array/Utility";
 import {areEqual} from "../Compare";
-import {Type} from "../Types";
+import Type from "../Types";
 import Integer from "../Integer";
 import {FiniteEnumeratorBase} from "./Enumeration/EnumeratorBase";
 import NotImplementedException from "../Exceptions/NotImplementedException";

@@ -5,8 +5,8 @@
 
 import ArgumentException from "./Exceptions/ArgumentException";
 import ArgumentNullException from "./Exceptions/ArgumentNullException";
-import {KeyValuePair, KeyValuePairOrTuple} from "./KeyValuePair";
-import {Type} from "./Types";
+import KeyValuePair, {KeyValuePairOrTuple} from "./KeyValuePair";
+import Type from "./Types";
 
 const
 	VOID0:undefined                  = void 0,

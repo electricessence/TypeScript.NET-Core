@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Type} from "../Types";
+import Type from "../Types";
 import SetBase from "./SetBase";
 import IMap from "../IMap";
 import {ILinkedNodeWithValue} from "./ILinkedListNode";
@@ -17,10 +17,8 @@ import ObjectPool from "../Disposable/ObjectPool";
 
 const VOID0:undefined = void 0;
 
-const bucketPool = new ObjectPool<any>(
-	100,
-	() => new LinkedNodeList<any>()
-);
+const bucketPool
+	      = ObjectPool.createAutoRecycled(() => new LinkedNodeList<any>(), 100);
 
 const EMPTY = "";
 function selfHash(item:any):string
@@ -97,7 +95,7 @@ export class HashSet<T>
 			const node:ILinkedNodeWithValue<T> = {value: item};
 			_._getSet().addNode(node); // add to the full list
 
-			list!.addNode({value: node}); // Add to the hash bucket (listNode).
+			list!.addNode(<ILinkedNodeWithValue<ILinkedNodeWithValue<T>>> {value: node}); // Add to the hash bucket (listNode).
 			return true;
 		}
 
@@ -147,7 +145,7 @@ export class HashSet<T>
 			list!.removeNode(node);
 			if(!list!.first) {
 				delete t![<any>item];
-				bucketPool.add(list);
+				bucketPool.give(<any>list);
 			}
 			const s = this._set;
 			if(s && s.removeNode(listNode))
@@ -168,7 +166,7 @@ function wipe(map:IMap<any> | undefined, depth:number = 1):void
 			let v = map[key];
 			delete map[key];
 			if(v instanceof LinkedNodeList)
-				bucketPool.add(v);
+				bucketPool.give(v);
 			else
 				wipe(v, depth - 1);
 		}

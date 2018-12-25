@@ -173,12 +173,12 @@ export class TypeInfo
 
 }
 
-export function Type(target:any):TypeInfo
+function Type(target:any):TypeInfo
 {
 	return new TypeInfo(target);
 }
 
-export module Type
+namespace Type
 {
 	/**
 	 * typeof true

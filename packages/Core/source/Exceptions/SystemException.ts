@@ -4,7 +4,7 @@
  * Based upon: https://msdn.microsoft.com/en-us/library/system.systemexception%28v=vs.110%29.aspx
  */
 
-import {Exception, Error} from "../Exception";
+import Exception, {Error} from "../Exception";
 
 const NAME:string = 'SystemException';
 

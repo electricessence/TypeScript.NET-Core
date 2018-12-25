@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import {Primitive} from "../Primitive";
+import Primitive from "../Primitive";
 import {ISerializable} from "../Serialization/ISerializable";
 import IMap from "../IMap";
 

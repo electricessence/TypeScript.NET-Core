@@ -4,7 +4,7 @@
  */
 
 import {using} from "../../Disposable/dispose";
-import {Type} from "../../Types";
+import Type from "../../Types";
 import ArrayEnumerator from "./ArrayEnumerator";
 import IndexEnumerator from "./IndexEnumerator";
 import UnsupportedEnumerableException from "./UnsupportedEnumerableException";

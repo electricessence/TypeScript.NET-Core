@@ -7,40 +7,39 @@
 
 import dispose from "./dispose";
 import DisposableBase from "./DisposableBase";
-import TaskHandler from "../Threading/Tasks/TaskHandler";
 import ArgumentOutOfRangeException from "../Exceptions/ArgumentOutOfRangeException";
 import ArgumentException from "../Exceptions/ArgumentException";
+import IRecyclable from "./IRecyclable";
 
 const
-	OBJECT_POOL       = "ObjectPool",
-	_MAX_SIZE         = "_maxSize",
-	ABSOLUTE_MAX_SIZE = 65536,
-	MUST_BE_GT1       = "Must be at valid number least 1.",
-	MUST_BE_LTM       = `Must be less than or equal to ${ABSOLUTE_MAX_SIZE}.`;
+	OBJECT_POOL            = "ObjectPool",
+	_MAX_SIZE              = "_maxSize",
+	DEFAULT_MAX_SIZE       = 1000,
+	ABSOLUTE_MAX_SIZE      = 65536,
+	MUST_BE_GT1            = "Must be at valid number least 1.",
+	MUST_BE_LTM            = `Must be less than or equal to ${ABSOLUTE_MAX_SIZE}.`,
+	AUTO_REDUCE_DEFAULT_MS = 1000; // auto reduce milliseconds.
 
-export class ObjectPool<T> extends DisposableBase
+export class ObjectPool<T>
+	extends DisposableBase
 {
 
+	private _toRecycle:T[] | null;
 	private _pool:T[];
-	private _trimmer:TaskHandler;
-	private _flusher:TaskHandler;
-	private _autoFlusher:TaskHandler;
+	private _reduceTimeoutId:any = 0; // possible differences between browser and NodeJS.  Keep as 'any'.
 
 	/**
 	 * A transient amount of object to exist over _maxSize until trim() is called.
 	 * But any added objects over _localAbsMaxSize will be disposed immediately.
+	 * @param _generator The delegate to create new items.
+	 * @param _recycler An optional delegate to clean/process items before returning to the pool.
+	 * @param _maxSize The soft ceiling by which the pool is trimmed. Default is 1000.
 	 */
-	private _localAbsMaxSize:number;
-
-	/**
-	 * By default will clear after 5 seconds of non-use.
-	 */
-	autoClearTimeout:number = 5000;
 
 	constructor(
-		private _maxSize:number,
-		private _generator?:(...args:any[])=>T,
-		private _recycler?:(o:T)=>void)
+		private readonly _generator?:(...args:any[]) => T,
+		private readonly _recycler?:(o:T) => void,
+		private readonly _maxSize:number = DEFAULT_MAX_SIZE)
 	{
 		super(OBJECT_POOL);
 		if(isNaN(_maxSize) || _maxSize<1)
@@ -48,17 +47,12 @@ export class ObjectPool<T> extends DisposableBase
 		if(_maxSize>ABSOLUTE_MAX_SIZE)
 			throw new ArgumentOutOfRangeException(_MAX_SIZE, _maxSize, MUST_BE_LTM);
 
-		this._localAbsMaxSize = Math.min(_maxSize*2, ABSOLUTE_MAX_SIZE);
-
+		this._toRecycle = _recycler ? [] : null;
 		this._pool = [];
-		this._trimmer = new TaskHandler(()=>this._trim());
-		const clear = () => this._clear();
-		this._flusher = new TaskHandler(clear);
-		this._autoFlusher = new TaskHandler(clear);
 	}
 
 	/**
-	 * Defines the maximum at which trimming should allow.
+	 * The soft ceiling by which the pool is trimmed.
 	 * @returns {number}
 	 */
 	get maxSize():number
@@ -67,61 +61,95 @@ export class ObjectPool<T> extends DisposableBase
 	}
 
 	/**
-	 * Current number of objects in pool.
+	 * Current number of objects in the pool.
 	 * @returns {number}
 	 */
 	get count():number
 	{
+		const r = this._toRecycle;
 		const p = this._pool;
-		return p ? p.length : 0;
+		return (r ? r.length : 0) + (p ? p.length : 0);
 	}
 
-	protected _trim():void
+	protected _recycle()
 	{
-		const pool = this._pool;
-		while(pool.length>this._maxSize)
+		const toRecycle = this._toRecycle;
+		if(!toRecycle) return;
+		const recycler = this._recycler!, pool = this._pool;
+		let item:T | undefined;
+		while((item = toRecycle.pop()))
 		{
-			dispose.single(<any>pool.pop(),true);
+			recycler(item);
+			pool.push(item);
 		}
 	}
 
-	/**
-	 * Will trim ensure the pool is less than the maxSize.
-	 * @param defer A delay before trimming.  Will be overridden by later calls.
-	 */
-	trim(defer?:number):void
+	trim(max?:number):void
 	{
-		this.throwIfDisposed();
-		this._trimmer.start(defer);
+		this._cancelAutoTrim();
+		this._recycle();
+		const pool = this._pool;
+		if(!pool.length) return; // no trimming needed.
+
+		if(typeof max!="number" || isNaN(max))
+		{
+			max = Math.min(
+				this._maxSize, // Hold no more than the maximum.
+				Math.floor(pool.length/2) - 1); // continue to reduce to zero over time.
+		}
+
+		if(max<=0)
+		{
+			dispose.these.noCopy(<any>pool, true);
+			pool.length = 0;
+			return; // all clear.
+		}
+
+		// Can only be here if max is greater than and so is the length.
+		while(pool.length>max)
+		{
+			dispose.single(<any>pool.pop(), true);
+		}
+
+		// setup next default automatic trim.
+		this.autoTrim();
 	}
 
-	protected _clear():void
+	protected _cancelAutoTrim()
 	{
-		const _ = this;
-		const p = _._pool;
-		_._trimmer.cancel();
-		_._flusher.cancel();
-		_._autoFlusher.cancel();
-		dispose.these.noCopy(<any>p, true);
-		p.length = 0;
+		var tid = this._reduceTimeoutId;
+		if(tid)
+		{
+			clearTimeout(tid);
+			this._reduceTimeoutId = 0;
+		}
+	}
+
+	autoTrim(msLater:number = AUTO_REDUCE_DEFAULT_MS, max:number = NaN):void
+	{
+		if(this.wasDisposed)
+		{
+			this.trim(0);
+			return;
+		}
+
+		this._cancelAutoTrim();
+		this._reduceTimeoutId = setTimeout(trim, msLater, this, max);
 	}
 
 	/**
-	 * Will clear out the pool.
-	 * Cancels any scheduled trims when executed.
-	 * @param defer A delay before clearing.  Will be overridden by later calls.
+	 * Clears out the pool.
 	 */
-	clear(defer?:number):void
+	clear():void
 	{
-		this.throwIfDisposed();
-		this._flusher.start(defer);
+		this.trim(0);
 	}
 
 	toArrayAndClear():T[]
 	{
 		this.throwIfDisposed();
-		this._trimmer.cancel();
-		this._flusher.cancel();
+		this._cancelAutoTrim();
+		this._recycle();
 		const p = this._pool;
 		this._pool = [];
 		return p;
@@ -140,93 +168,95 @@ export class ObjectPool<T> extends DisposableBase
 	{
 		super._onDispose();
 		const _:any = this;
+		_.clear();
 		_._generator = null;
 		_._recycler = null;
-		dispose(
-			_._trimmer,
-			_._flusher,
-			_._autoFlusher
-		);
-		_._trimmer = null;
-		_._flusher = null;
-		_._autoFlusher = null;
 
-		_._pool.length = 0;
+		_._toRecycle = null;
 		_._pool = null;
 	}
 
-	extendAutoClear():void
-	{
-		const _ = this;
-		_.throwIfDisposed();
-		const t = _.autoClearTimeout;
-		if(isFinite(t) && !_._autoFlusher.isScheduled)
-			_._autoFlusher.start(t);
-	}
 
-	add(o:T):void
+	give(entry:T):void
 	{
 		const _ = this;
 		_.throwIfDisposed();
-		if(_._pool.length>=_._localAbsMaxSize)
+		if(entry==null)
 		{
-			// Getting too big, dispose immediately...
-			dispose(<any>o);
+			console.warn("Attempting to add", entry, "to an ObjectPool.");
+			return;
+		}
+
+		const destination = _._toRecycle || _._pool;
+		if(destination.length<ABSOLUTE_MAX_SIZE)
+		{
+			destination.push(entry);
+		}
+		// => Destination is very large? Prevent adding to pool.
+		else if(_._recycler)
+		{
+			_._recycler(entry);
+		}
+
+		if(_._toRecycle && _._toRecycle.length)
+		{
+			// If items need recycling do so immediately after.
+			_.autoTrim(0, _._maxSize);
 		}
 		else
 		{
-			if(_._recycler) _._recycler(o);
-			_._pool.push(o);
-			const m = _._maxSize;
-			if(m<ABSOLUTE_MAX_SIZE && _._pool.length>m)
-				_._trimmer.start(500);
+			// No new recyclables? Just trim normally.
+			_.autoTrim();
 		}
-		_.extendAutoClear();
-
 	}
 
-	private _onTaken():void
-	{
-		const _ = this, len = _._pool.length;
-		if(len<=_._maxSize)
-			_._trimmer.cancel();
-		if(len)
-			_.extendAutoClear();
-	}
-
-	tryTake():T|undefined
+	tryTake():T | undefined
 	{
 		const _ = this;
 		_.throwIfDisposed();
 
-		try
+		var entry = _._pool.pop();
+		if(!entry && _._toRecycle && (entry = _._toRecycle.pop()))
 		{
-			return _._pool.pop();
+			_._recycler!(entry);
 		}
-		finally
-		{
-			_._onTaken();
-		}
+		return entry;
 	}
 
-	take(factory?:()=>T):T
+	take(factory?:() => T):T
 	{
 		const _ = this;
 		_.throwIfDisposed();
 		if(!_._generator && !factory)
 			throw new ArgumentException('factory', "Must provide a factory if on was not provided at construction time.");
 
-		try
-		{
-			return _._pool.pop() || factory && factory() || _._generator!();
-		}
-		finally
-		{
-			_._onTaken();
-		}
+		return _.tryTake() || factory && factory() || _._generator!();
 	}
 
+	static create<T>(
+		generator?:(...args:any[]) => T,
+		recycler?:(o:T) => void,
+		max:number = DEFAULT_MAX_SIZE):ObjectPool<T>
+	{
+		return new ObjectPool<T>(generator, recycler, max);
+	}
 
+	static createAutoRecycled<T extends IRecyclable>(
+		generator?:(...args:any[]) => T,
+		max:number = DEFAULT_MAX_SIZE):ObjectPool<T>
+	{
+		return new ObjectPool<T>(generator, recycle, max);
+	}
+}
+
+function recycle(e:IRecyclable)
+{
+	e.recycle();
+}
+
+function trim<T>(instance:ObjectPool<T>, max:number)
+{
+	instance.trim(max);
 }
 
 export default ObjectPool;

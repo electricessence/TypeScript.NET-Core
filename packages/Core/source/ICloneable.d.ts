@@ -4,9 +4,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-export interface ICloneable<T>
+export default interface ICloneable<T>
 {
 	clone():T;
 }
-
-export default ICloneable;

@@ -18,7 +18,7 @@ export interface Error {
 /**
  * Represents errors that occur during application execution.
  */
-export class Exception implements Error, IDisposable
+export default class Exception implements Error, IDisposable
 {
 	/**
 	 * A string representation of the error type.
@@ -108,5 +108,3 @@ export class Exception implements Error, IDisposable
 		}
 	}
 }
-
-export default Exception;

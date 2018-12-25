@@ -10,7 +10,7 @@ import {FiniteEnumeratorBase} from "../Enumeration/EnumeratorBase";
 import ArgumentNullException from "../../Exceptions/ArgumentNullException";
 import InvalidOperationException from "../../Exceptions/InvalidOperationException";
 import {extractKeyValue} from "../../KeyValueExtract";
-import {KeyValuePair, KeyValuePairOrTuple} from "../../KeyValuePair";
+import KeyValuePair, {KeyValuePairOrTuple} from "../../KeyValuePair";
 import IDictionary from "./IDictionary";
 import {FiniteIEnumerator, IEnumerator} from "../Enumeration/IEnumerator";
 import KeyNotFoundException from "../KeyNotFoundException";

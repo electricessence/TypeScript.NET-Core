@@ -4,7 +4,7 @@
  */
 
 
-import {IDisposable} from "../../Disposable/IDisposable";
+import IDisposable from "../../Disposable/IDisposable";
 import {IIterator} from "./IIterator";
 
 // IIterator is added for future compatibility.

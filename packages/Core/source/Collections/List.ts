@@ -6,7 +6,7 @@
 import {areEqual} from "../Compare";
 import {contains, copyTo, indexOf, remove, removeIndex} from "./Array/Utility";
 import {forEach} from "./Enumeration/Enumerator";
-import {Type} from "../Types";
+import Type from "../Types";
 import CollectionBase from "./CollectionBase";
 import {ActionWithIndex, EqualityComparison, PredicateWithIndex} from "../FunctionTypes";
 import {FiniteIEnumerator} from "./Enumeration/IEnumerator";
