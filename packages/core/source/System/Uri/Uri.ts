@@ -15,7 +15,7 @@ import Exception from "../Exception";
 import ArgumentException from "../Exceptions/ArgumentException";
 import ArgumentOutOfRangeException from "../Exceptions/ArgumentOutOfRangeException";
 import IUri from "./IUri";
-import IMap from "../../IMap";
+import IMap from "../IMap";
 import Primitive from "../Primitive";
 import IEquatable from "../IEquatable";
 import {Action} from "../FunctionTypes";

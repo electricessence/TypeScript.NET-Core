@@ -3,6 +3,6 @@
  * Licensing: MIT
  */
 
-const copyFolderRecursiveSync = require("./utility/copyFolderRecursiveSync").default;
+const copyFolderRecursiveSync = require("../../utility/copyFolderRecursiveSync").default;
 
 copyFolderRecursiveSync("./source","./dist", /.+\.d\.ts$/i);

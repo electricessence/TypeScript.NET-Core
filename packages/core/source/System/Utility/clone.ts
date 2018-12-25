@@ -5,7 +5,7 @@
 
 import {Type} from "../Types";
 import Primitive from "../Primitive";
-import {JsonArray, JsonMap} from "../../JSON";
+import {JsonArray, JsonMap} from "../JSON";
 import copy from "../Collections/Array/copy";
 
 export default function clone(source:Primitive | JsonMap | JsonArray, depth:number = 0):any

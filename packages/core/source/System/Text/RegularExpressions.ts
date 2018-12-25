@@ -4,7 +4,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 // NOTE: Avoid real (types/interfaces only = ok) dependencies so this class can be used cleanly.
-import IMap from "../../IMap";
+import IMap from "../IMap";
 import Primitive from "../Primitive";
 import {SelectorWithIndex} from "../FunctionTypes";
 

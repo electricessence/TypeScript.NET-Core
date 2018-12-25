@@ -5,7 +5,7 @@
  */
 
 import IDisposable from "./Disposable/IDisposable";
-import IMap from "../IMap";
+import IMap from "./IMap";
 
 const NAME:string = 'Exception';
 

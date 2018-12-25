@@ -9,7 +9,7 @@ import QueryParam from "./QueryParam";
 import {Type} from "../Types";
 import {extractKeyValue} from "../KeyValueExtract";
 import {forEach, isFiniteEnumerableOrArrayLike} from "../Collections/Enumeration/Enumerator";
-import IMap from "../../IMap";
+import IMap from "../IMap";
 import Primitive from "../Primitive";
 import {StringKeyValuePair} from "../KeyValuePair";
 import FiniteEnumerableOrArrayLike from "../Collections/FiniteEnumerableOrArrayLike";

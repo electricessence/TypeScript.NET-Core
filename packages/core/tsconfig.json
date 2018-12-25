@@ -10,10 +10,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "rootDir": "./",
-    "outDir": "../dist",
-    "declarationDir": "../dist"
+    "outDir": "./dist",
+    "declarationDir": "./dist"
   },
   "include": [
-    "./"
+    "./source"
   ]
 }

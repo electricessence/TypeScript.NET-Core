@@ -5,7 +5,7 @@
 
 import {Type} from "../Types";
 import SetBase from "./SetBase";
-import IMap from "../../IMap";
+import IMap from "../IMap";
 import {ILinkedNodeWithValue} from "./ILinkedListNode";
 import {EqualityComparison, HashSelector} from "../FunctionTypes";
 import ArgumentNullException from "../Exceptions/ArgumentNullException";

@@ -3,7 +3,7 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import IMap from "../../../IMap";
+import IMap from "../../IMap";
 import {ICollection} from "../ICollection";
 import {KeyValuePair, StringKeyValuePair} from "../../KeyValuePair";
 import {Action} from "../../FunctionTypes";
