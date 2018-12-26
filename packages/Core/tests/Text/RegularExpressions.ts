@@ -1,7 +1,7 @@
 ///<reference types="node"/>
 import * as assert from "assert";
-import RegexMatchEnumerator from "../../../../dist/commonjs/System/Text/RegexMatchEnumerator";
-import Regex, {Match} from "../../../../dist/commonjs/System/Text/RegularExpressions";
+import RegexMatchEnumerator from "../../dist/Text/RegexMatchEnumerator";
+import Regex, {Match} from "../../dist/Text/RegularExpressions";
 
 const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const regex = new Regex("(?<"+"first>[A-E]+)", ["i"]);
@@ -9,6 +9,7 @@ const regex = new Regex("(?<"+"first>[A-E]+)", ["i"]);
 const regex2 = new Regex(/([A-E]+)/im);
 //noinspection JSUnusedLocalSymbols
 const regex3 = new Regex(/([A-E]+)/);
+// noinspection RegExpRepeatedSpace
 const regex4 = new Regex(/A	B C D  E/,"i","w");
 const pattern = "([A-E]+)";
 

@@ -2,8 +2,8 @@
 import * as assert from "assert";
 import "mocha";
 import * as ICollectionTests from "./ICollection";
-import LinkedList from "../../../../dist/commonjs/System/Collections/LinkedList";
-import {areEqual} from "../../../../dist/commonjs/System/Collections/Array/Compare";
+import LinkedList from "../../dist/Collections/LinkedList";
+import {areEqual} from "../../dist/Collections/Array/Compare";
 
 
 const CLASS_NAME = 'LinkedList';
