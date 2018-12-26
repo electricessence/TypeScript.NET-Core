@@ -5,13 +5,11 @@
  * Source: http://referencesource.microsoft.com/#mscorlib/system/IObserver.cs
  */
 
-import {Action, Closure} from "../FunctionTypes";
-export interface IObserver<T>
+import {Action, Closure} from "typescript-dotnet-core/FunctionTypes";
+export default interface IObserver<T>
 {
 	// onNext is optional because an observer may only care about onCompleted.
 	onNext?:Action<T>;
 	onError?:Action<any>;
 	onCompleted?:Closure;
 }
-
-export default IObserver;

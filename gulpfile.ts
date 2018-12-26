@@ -17,21 +17,21 @@ const REMOVE_SOURCE_JAVASCRIPT = "Remove Source JavaScript";
 
 function setupDist(dist:string)
 {
-	const localPackage = PACKAGES + dist +"/";
+	const localPackage = PACKAGES + dist + "/";
 	const distFolder = localPackage + "dist";
 	console.log(distFolder);
 
 	const
-		cleanTask = distFolder + " [ Clean ]",
-		tsTask = localPackage + " [ TS Compile ]",
-		copyDefTask = distFolder + " [ Copy Definitions ]",
+		cleanTask    = distFolder + " [ Clean ]",
+		tsTask       = localPackage + " [ TS Compile ]",
+		copyDefTask  = distFolder + " [ Copy Definitions ]",
 		packageFiles = distFolder + " [ Copy Package Files ]"
 
-	const tsProject = ts.createProject(localPackage+ 'tsconfig.json');
+	const tsProject = ts.createProject(localPackage + 'tsconfig.json');
 
 	// First things first...  Avoid artifacts.
 	task(cleanTask,
-		() => src(distFolder, {allowEmpty:true})
+		() => src(distFolder, {allowEmpty: true})
 			.pipe(clean()));
 
 	// Compile the project.
@@ -45,7 +45,7 @@ function setupDist(dist:string)
 			return merge(
 				tsResult.dts, // Doesn't need sourcemaps nor minification.
 				tsResult.js
-					.pipe(uglify())
+					.pipe(uglify({output: {comments: /^\/*!/}})) // uglify but keep special comments.
 					.pipe(sourcemaps.write('.')))
 				.pipe(dest(distFolder));
 		});
@@ -57,9 +57,10 @@ function setupDist(dist:string)
 
 	task(packageFiles,
 		() => src([
-				localPackage + "package.json",
-				localPackage + "README*",
-				"LICENSE*"])
+			localPackage + "package.json",
+			localPackage + "README*",
+			"LICENSE*"
+		])
 			.pipe(dest(distFolder)));
 
 	return series(cleanTask,
@@ -69,12 +70,12 @@ function setupDist(dist:string)
 			packageFiles));
 }
 
-const packages = ["Core", "Events"];// readdirSync(PACKAGES);
+const packages = ["Core", "Events", "Observables"];// readdirSync(PACKAGES);
 task(RENDER_PACKAGES,
 	parallel(packages.map(setupDist)));
 
 task(REMOVE_SOURCE_JAVASCRIPT,
-	()=> src(PACKAGES+"*/source/**/*.js").pipe(clean()));
+	() => src(PACKAGES + "*/source/**/*.js").pipe(clean()));
 
 export default parallel(
 	RENDER_PACKAGES

@@ -30,7 +30,7 @@ function setupDist(dist) {
             .pipe(tsProject());
         return merge(tsResult.dts, // Doesn't need sourcemaps nor minification.
         tsResult.js
-            .pipe(uglify())
+            .pipe(uglify({ output: { comments: /^\/*!/ } })) // uglify but keep special comments.
             .pipe(sourcemaps.write('.')))
             .pipe(gulp_1.dest(distFolder));
     });
@@ -45,7 +45,7 @@ function setupDist(dist) {
         .pipe(gulp_1.dest(distFolder)));
     return gulp_1.series(cleanTask, gulp_1.parallel(tsTask, copyDefTask, packageFiles));
 }
-const packages = ["Core", "Events"]; // readdirSync(PACKAGES);
+const packages = ["Core", "Events", "Observables"]; // readdirSync(PACKAGES);
 gulp_1.task(RENDER_PACKAGES, gulp_1.parallel(packages.map(setupDist)));
 gulp_1.task(REMOVE_SOURCE_JAVASCRIPT, () => gulp_1.src(PACKAGES + "*/source/**/*.js").pipe(clean()));
 exports.default = gulp_1.parallel(RENDER_PACKAGES);

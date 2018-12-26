@@ -8,12 +8,12 @@
 import SubscribableBase from "./SubscribableBase";
 import IObservable from "./IObservable";
 import IObserver from "./IObserver";
-import IDisposable from "../Disposable/IDisposable";
-import {Action, Closure} from "../FunctionTypes";
+import IDisposable from "typescript-dotnet-core/Disposable/IDisposable";
+import {Action, Closure} from "typescript-dotnet-core/FunctionTypes";
 
 // Can be used as a base class, mixin, or simply reference on how to implement the pattern.
 
-export abstract class ObservableBase<T>
+export default abstract class ObservableBase<T>
 extends SubscribableBase<IObserver<T>> implements IObservable<T>
 {
 
@@ -89,7 +89,7 @@ function processAction<T>(
 		catch(ex)
 		{
 			observersErrors = observersErrors || [];
-			// Don't let one error prevent others from recieving information.
+			// Don't let one error prevent others from receiving information.
 			observersErrors.push({observer: s, ex: ex});
 		}
 	}
@@ -107,5 +107,3 @@ function processAction<T>(
 	}
 
 }
-
-export default ObservableBase;

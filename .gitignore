@@ -25,3 +25,6 @@ bower_components
 packages/*/*/**/*.js
 packages/*/*/**/*.js.map
 packages/*/dist
+
+tests/**/*.js
+tests/**/*.js.map

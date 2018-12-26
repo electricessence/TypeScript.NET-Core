@@ -5,16 +5,16 @@
  * Source: http://referencesource.microsoft.com/#mscorlib/system/IObserver.cs
  */
 
-import LinkedNodeList from "../Collections/LinkedNodeList";
-import dispose from "../Disposable/dispose";
+import LinkedNodeList from "typescript-dotnet-core/Collections/LinkedNodeList";
+import dispose from "typescript-dotnet-core/Disposable/dispose";
 import Subscription from "./Subscription";
-import {ILinkedNodeWithValue} from "../Collections/ILinkedListNode";
-import IDisposable from "../Disposable/IDisposable";
-import DisposableBase from "../Disposable/DisposableBase";
+import {ILinkedNodeWithValue} from "typescript-dotnet-core/Collections/ILinkedListNode";
+import IDisposable from "typescript-dotnet-core/Disposable/IDisposable";
+import DisposableBase from "typescript-dotnet-core/Disposable/DisposableBase";
 
 const NAME = "SubscribableBase";
 // This class is very much akin to a registry or 'Set' but uses an intermediary (Subscription) for releasing the registration.
-export class SubscribableBase<TSubscriber>
+export default class SubscribableBase<TSubscriber>
 extends DisposableBase
 {
 
@@ -108,5 +108,3 @@ extends DisposableBase
 	}
 
 }
-
-export default SubscribableBase;
