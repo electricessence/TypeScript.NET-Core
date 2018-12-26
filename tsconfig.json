@@ -1,0 +1,14 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "moduleResolution": "node",
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "include": [
+    "./*.ts"
+  ]
+}
