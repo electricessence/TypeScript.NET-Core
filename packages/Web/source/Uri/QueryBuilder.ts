@@ -3,9 +3,9 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import Type from "../Types";
-import OrderedStringKeyDictionary from "../Collections/Dictionaries/OrderedStringKeyDictionary";
-import {isFiniteEnumerableOrArrayLike} from "../Collections/Enumeration/Enumerator";
+import Type from "typescript-dotnet-core/Types";
+import OrderedStringKeyDictionary from "typescript-dotnet-core/Collections/Dictionaries/OrderedStringKeyDictionary";
+import {isFiniteEnumerableOrArrayLike} from "typescript-dotnet-core/Collections/Enumeration/Enumerator";
 import UriComponent from "./UriComponent";
 import QueryParam from "./QueryParam";
 import {encode, parse} from "./QueryParams";
@@ -16,7 +16,7 @@ import {encode, parse} from "./QueryParams";
  *
  * In other languages, dictionaries are not reliable for retaining the order of stored values. So for certainty and flexibility we use an ordered dictionary as a base class.
  */
-export class QueryBuilder extends OrderedStringKeyDictionary<UriComponent.Value|UriComponent.Value[]>
+export default class QueryBuilder extends OrderedStringKeyDictionary<UriComponent.Value|UriComponent.Value[]>
 {
 
 	constructor(
@@ -105,4 +105,3 @@ export class QueryBuilder extends OrderedStringKeyDictionary<UriComponent.Value|
 	}
 }
 
-export default QueryBuilder;

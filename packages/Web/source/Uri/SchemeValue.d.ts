@@ -4,7 +4,7 @@
  * Based on: https://msdn.microsoft.com/en-us/library/system.uri.scheme%28v=vs.110%29.aspx
  */
 
-export module SchemeValue
+declare namespace SchemeValue
 {
 	export type File = 'file';
 	export type Gopher = 'gopher';

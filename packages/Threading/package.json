@@ -1,9 +1,9 @@
 {
   "name": "typescript-dotnet-threading",
-  "version": "1.0.2-preview",
+  "version": "1.0.4-preview",
   "license": "MIT",
   "author": "electricessence <npm@electrified.net>",
-  "description": "A JavaScript-Friendly .NET Based TypeScript Library.",
+  "description": "A JavaScript friendly, useful set of statically typed threading/task/timeout utilities.  Part of the TypeScript.NET-Core libraries.",
   "private": false,
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "tslib": "^1.9.3",
-    "typescript-dotnet-core": "^1.0.2-preview",
-    "typescript-dotnet-observables": "^1.0.2-preview"
+    "typescript-dotnet-core": "^1.0.4-preview",
+    "typescript-dotnet-observables": "^1.0.4-preview"
   }
 }

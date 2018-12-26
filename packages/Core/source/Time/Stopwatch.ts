@@ -3,8 +3,8 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import TimeSpan from "../Time/TimeSpan";
-import ITimer from "../Timers/ITimer";
+import TimeSpan from "./TimeSpan";
+import ITimer from "./ITimer";
 
 function getTimestampMilliseconds():number
 {

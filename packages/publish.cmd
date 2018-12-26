@@ -19,3 +19,7 @@ cd ../../
 cd Promises/dist
 call npm publish --silent
 cd ../../
+
+cd Web/dist
+call npm publish --silent
+cd ../../

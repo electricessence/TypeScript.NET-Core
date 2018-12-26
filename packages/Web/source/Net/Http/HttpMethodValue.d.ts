@@ -4,7 +4,7 @@
  * Based on: https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
  */
 
-export module HttpMethodValue {
+declare namespace HttpMethodValue {
 
 	export type Options = 'OPTIONS';
 	export type Head = 'HEAD';

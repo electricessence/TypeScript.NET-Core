@@ -3,15 +3,14 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import ICancellable from "../Threading/ICancellable";
-import ObservableBase from "../Observable/ObservableBase";
-import ITimer from "./ITimer";
-import {Closure} from "../FunctionTypes";
+import ObservableBase from "./ObservableBase";
+import ITimer from "typescript-dotnet-core/Time/ITimer";
+import {Closure} from "typescript-dotnet-core/FunctionTypes";
 
 /**
  * A timer class that uses an Observable pattern to allow for subscribing to ticks.
  */
-export default class Timer extends ObservableBase<number> implements ITimer, ICancellable
+export default class Timer extends ObservableBase<number> implements ITimer
 {
 
 	private _cancel:Closure | undefined;

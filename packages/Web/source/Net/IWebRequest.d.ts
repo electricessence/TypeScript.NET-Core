@@ -5,10 +5,10 @@
  */
 
 
-import {IRequestCachePolicy} from "./Cache/IRequestCachePolicy";
-import {AuthenticationLevel} from "./Security/AuthenticationLevel";
+import IRequestCachePolicy from "./Cache/IRequestCachePolicy";
+import AuthenticationLevel from "./Security/AuthenticationLevel";
 
-export interface IWebRequest
+export default interface IWebRequest
 {
 
 	authenticationLevel:AuthenticationLevel;
@@ -18,5 +18,3 @@ export interface IWebRequest
 	contentLength:number;
 	contentType:string;
 }
-
-export default IWebRequest;

@@ -4,21 +4,21 @@
  * Based on: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
  */
 
-import Type from "../Types";
+import Type from "typescript-dotnet-core/Types";
 import UriComponent from "./UriComponent";
 import Scheme from "./Scheme";
 import SchemeValue from "./SchemeValue";
 import QueryParam from "./QueryParam";
 import {encode, parseToMap, Separator} from "./QueryParams";
-import {trim} from "../Text/Utility";
-import Exception from "../Exception";
-import ArgumentException from "../Exceptions/ArgumentException";
-import ArgumentOutOfRangeException from "../Exceptions/ArgumentOutOfRangeException";
+import {trim} from "typescript-dotnet-core/Text/Utility";
+import Exception from "typescript-dotnet-core/Exception";
+import ArgumentException from "typescript-dotnet-core/Exceptions/ArgumentException";
+import ArgumentOutOfRangeException from "typescript-dotnet-core/Exceptions/ArgumentOutOfRangeException";
 import IUri from "./IUri";
-import IMap from "../IMap";
-import Primitive from "../Primitive";
-import IEquatable from "../IEquatable";
-import {Action} from "../FunctionTypes";
+import IMap from "typescript-dotnet-core/IMap";
+import Primitive from "typescript-dotnet-core/Primitive";
+import IEquatable from "typescript-dotnet-core/IEquatable";
+import {Action} from "typescript-dotnet-core/FunctionTypes";
 
 const VOID0:undefined = void 0;
 
@@ -298,7 +298,7 @@ function copyUri(from:IUri, to?:IUri)
 {
 	let i = 0, field:string;
 	if(!to) to = {};
-	while(field = Fields[i++])
+	while((field = Fields[i++]))
 	{
 		const value = (<any>from)[field];
 		if(value) (<any>to)[field] = value;

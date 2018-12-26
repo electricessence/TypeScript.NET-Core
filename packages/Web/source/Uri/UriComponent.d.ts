@@ -3,11 +3,11 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import Primitive from "../Primitive";
-import {ISerializable} from "../Serialization/ISerializable";
-import IMap from "../IMap";
+import Primitive from "typescript-dotnet-core/Primitive";
+import {ISerializable} from "typescript-dotnet-core/Serialization/ISerializable";
+import IMap from "typescript-dotnet-core/IMap";
 
-export module UriComponent {
+declare namespace UriComponent {
 	export interface Formattable
 	{
 		toUriComponent():string;

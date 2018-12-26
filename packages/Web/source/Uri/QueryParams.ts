@@ -3,16 +3,16 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import * as Serialize from "../Serialization/Utility";
+import * as Serialize from "typescript-dotnet-core/Serialization/Utility";
 import UriComponent from "./UriComponent";
 import QueryParam from "./QueryParam";
-import Type from "../Types";
-import {extractKeyValue} from "../KeyValueExtract";
-import {forEach, isFiniteEnumerableOrArrayLike} from "../Collections/Enumeration/Enumerator";
-import IMap from "../IMap";
-import Primitive from "../Primitive";
-import {StringKeyValuePair} from "../KeyValuePair";
-import FiniteEnumerableOrArrayLike from "../Collections/FiniteEnumerableOrArrayLike";
+import Type from "typescript-dotnet-core/Types";
+import {extractKeyValue} from "typescript-dotnet-core/KeyValueExtract";
+import {forEach, isFiniteEnumerableOrArrayLike} from "typescript-dotnet-core/Collections/Enumeration/Enumerator";
+import IMap from "typescript-dotnet-core/IMap";
+import Primitive from "typescript-dotnet-core/Primitive";
+import {StringKeyValuePair} from "typescript-dotnet-core/KeyValuePair";
+import FiniteEnumerableOrArrayLike from "typescript-dotnet-core/Collections/FiniteEnumerableOrArrayLike";
 
 /*
  * This module is provided as a lighter weight utility for acquiring query params.

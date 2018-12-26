@@ -3,12 +3,10 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-export interface ITimer
+export default interface ITimer
 {
 	isRunning:boolean;
 	start():void;
 	stop():void;
 	reset():void;
 }
-
-export default ITimer;

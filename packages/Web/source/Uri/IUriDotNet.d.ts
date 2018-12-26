@@ -4,16 +4,16 @@
  * Based on: https://msdn.microsoft.com/en-us/library/system.uri%28v=vs.110%29.aspx
  */
 
-import {UriHostNameType} from "./HostNameType";
-import {ISerializable} from "../Serialization/ISerializable";
-import {IUri} from "./IUri";
-import {IEquatable} from "../IEquatable";
+import UriHostNameType from "./HostNameType";
+import {ISerializable} from "typescript-dotnet-core/Serialization/ISerializable";
+import IUri from "./IUri";
+import IEquatable from "typescript-dotnet-core/IEquatable";
 
 /**
  * Provides an object representation of a uniform resource identifier (URI) and easy access to the parts of the URI.
  * Currently retained for reference to the .NET implementation.
  */
-interface IUriDotNet extends IUri, ISerializable, IEquatable<IUri>
+export default interface IUriDotNet extends IUri, ISerializable, IEquatable<IUri>
 {
 
 	/**
@@ -101,5 +101,3 @@ interface IUriDotNet extends IUri, ISerializable, IEquatable<IUri>
 
 
 }
-
-export default IUriDotNet;

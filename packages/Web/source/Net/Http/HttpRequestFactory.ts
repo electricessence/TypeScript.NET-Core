@@ -4,8 +4,8 @@
  */
 
 import QueryParam from "../../Uri/QueryParam";
-import ArgumentNullException from "../../Exceptions/ArgumentNullException";
-import DisposableBase from "../../Disposable/DisposableBase";
+import ArgumentNullException from "typescript-dotnet-core/Exceptions/ArgumentNullException";
+import DisposableBase from "typescript-dotnet-core/Disposable/DisposableBase";
 import HttpMethodValue from "./HttpMethodValue";
 import HttpMethod from "./HttpMethod";
 import Uri from "../../Uri/Uri";

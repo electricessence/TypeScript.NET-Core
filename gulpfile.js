@@ -10,6 +10,7 @@ const ts = require("gulp-typescript");
 const sourcemaps = require("gulp-sourcemaps");
 const uglify = require("gulp-uglify");
 const merge = require("merge2");
+const fs_1 = require("fs");
 const PACKAGES = "./packages/";
 const RENDER_PACKAGES = "Render Packages";
 const REMOVE_SOURCE_JAVASCRIPT = "Remove Source JavaScript";
@@ -45,7 +46,7 @@ function setupDist(dist) {
         .pipe(gulp_1.dest(distFolder)));
     return gulp_1.series(cleanTask, gulp_1.parallel(tsTask, copyDefTask, packageFiles));
 }
-const packages = ["Core", "Events", "Observables", "Threading", "Promises"]; // readdirSync(PACKAGES);
-gulp_1.task(RENDER_PACKAGES, gulp_1.parallel(packages.map(setupDist)));
+const packages = fs_1.readdirSync(PACKAGES);
+gulp_1.task(RENDER_PACKAGES, gulp_1.parallel(packages.filter(d => fs_1.lstatSync(PACKAGES + d).isDirectory()).map(setupDist)));
 gulp_1.task(REMOVE_SOURCE_JAVASCRIPT, () => gulp_1.src(PACKAGES + "*/source/**/*.js").pipe(clean()));
 exports.default = gulp_1.parallel(RENDER_PACKAGES);

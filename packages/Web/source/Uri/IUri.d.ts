@@ -4,7 +4,7 @@
  * Based on: https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
  */
 
-import {SchemeValue} from "./SchemeValue";
+import SchemeValue from "./SchemeValue";
 // noinspection SpellCheckingInspection
 /**
  * https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
@@ -44,7 +44,7 @@ export interface IUrn
  *  scheme  user information     host     port            query   fragment
  * ```
  */
-export interface IUri extends IUrn
+export default interface IUri extends IUrn
 {
 
 
@@ -75,5 +75,3 @@ export interface IUri extends IUrn
 
 
 }
-
-export default IUri;

@@ -6,7 +6,7 @@
 
 import SchemeValue from "./SchemeValue";
 
-export module Scheme {
+namespace Scheme {
 
 	/**
 	 * The resource is a file on the local computer.

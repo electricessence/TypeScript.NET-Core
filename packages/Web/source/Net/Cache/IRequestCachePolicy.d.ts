@@ -7,12 +7,10 @@
 
 import {RequestCacheLevel} from "./RequestCacheLevel";
 
-export interface IRequestCachePolicy
+export default interface IRequestCachePolicy
 {
 	/**
 	 * Gets the RequestCacheLevel value specified when this instance was constructed.
 	 */
 	level:RequestCacheLevel;
 }
-
-export default IRequestCachePolicy;
