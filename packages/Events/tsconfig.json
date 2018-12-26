@@ -1,15 +1,7 @@
 {
-  "compileOnSave": true,
+  "extends": "../tsconfig-base",
   "compilerOptions": {
-    "module": "umd",
-    "target": "es5",
-    "strict": true,
-    "sourceMap": true,
-    "declaration": true,
-    "removeComments": false,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "rootDir": "./",
+    "rootDir": "./source",
     "outDir": "./dist",
     "declarationDir": "./dist"
   },

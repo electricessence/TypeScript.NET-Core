@@ -3,10 +3,10 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import * as AU from "../Collections/Array/Utility";
-import shallowCopy from "../Utility/shallowCopy";
-import DisposableBase from "../Disposable/DisposableBase";
-import dispose from "../Disposable/dispose";
+import * as AU from "typescript-dotnet-core/Collections/Array/Utility";
+import shallowCopy from "typescript-dotnet-core/Utility/shallowCopy";
+import DisposableBase from "typescript-dotnet-core/Disposable/DisposableBase";
+import dispose from "typescript-dotnet-core/Disposable/dispose";
 import IEventListener from "./IEventListener";
 import EventDispatcherEntry from "./EventDispatcherEntry";
 import IEventDispatcher from "./IEventDispatcher";

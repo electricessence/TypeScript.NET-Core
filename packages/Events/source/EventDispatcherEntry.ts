@@ -3,14 +3,14 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import Type from "../Types";
-import DisposableBase from "../Disposable/DisposableBase";
-import ArgumentNullException from "../Exceptions/ArgumentNullException";
-import ArgumentException from "../Exceptions/ArgumentException";
-import {areEquivalent} from "../Compare";
+import Type from "typescript-dotnet-core/Types";
+import DisposableBase from "typescript-dotnet-core/Disposable/DisposableBase";
+import ArgumentNullException from "typescript-dotnet-core/Exceptions/ArgumentNullException";
+import ArgumentException from "typescript-dotnet-core/Exceptions/ArgumentException";
+import {areEquivalent} from "typescript-dotnet-core/Compare";
 import IEventListener from "./IEventListener";
-import IEquatable from "../IEquatable";
-import {Closure} from "../FunctionTypes";
+import IEquatable from "typescript-dotnet-core/IEquatable";
+import {Closure} from "typescript-dotnet-core/FunctionTypes";
 
 const NAME = "EventDispatcherEntry";
 export class EventDispatcherEntry<TParams>
