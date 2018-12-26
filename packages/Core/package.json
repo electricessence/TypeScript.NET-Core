@@ -1,6 +1,6 @@
 {
   "name": "typescript-dotnet-core",
-  "version": "1.0.0",
+  "version": "1.0.0-preview",
   "license": "MIT",
   "author": "electricessence <npm@electrified.net>",
   "description": "A JavaScript-Friendly .NET Based TypeScript Library.",
@@ -21,15 +21,12 @@
     ".NET",
     "dotnet",
     "TypeScript.NET",
-    "LINQ",
+    "typescript-dotnet",
     "Regex",
     "TypeValidator",
-    "Promise",
-    "Parallel",
     "IDisposable",
     "IEnumerable",
-    "ICollection",
-    "typescript-dotnet"
+    "ICollection"
   ],
   "devDependencies": {
     "@types/mocha": "^2.2.48",
