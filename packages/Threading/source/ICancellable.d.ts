@@ -3,9 +3,9 @@
  * Licensing: MIT https://github.com/electricessence/TypeScript.NET-Core/blob/master/LICENSE.md
  */
 
-import IDisposable from "../Disposable/IDisposable";
+import IDisposable from "typescript-dotnet-core/Disposable/IDisposable";
 
-export interface ICancellable extends IDisposable
+export default interface ICancellable extends IDisposable
 {
 
 	/**
@@ -14,5 +14,3 @@ export interface ICancellable extends IDisposable
 	 */
 	cancel():boolean;
 }
-
-export default ICancellable;

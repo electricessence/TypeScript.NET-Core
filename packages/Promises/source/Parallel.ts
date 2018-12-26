@@ -4,14 +4,14 @@
  * Originally based upon Parallel.js: https://github.com/adambom/parallel.js/blob/master/lib/parallel.js
  */
 
-import {ArrayPromise, PromiseBase, PromiseCollection, TSDNPromise} from "../../Promises/Promise";
-import Type from "../../Types";
-import Worker from "../Worker";
-import {WorkerLike} from "../WorkerType";
-import deferImmediate from "../deferImmediate";
-import {isNodeJS} from "../../Environment";
-import ObjectPool from "../../Disposable/ObjectPool";
-import IMap from "../../IMap";
+import {ArrayPromise, PromiseBase, PromiseCollection, TSDNPromise} from "./Promise";
+import Type from "typescript-dotnet-core/Types";
+import Worker from "typescript-dotnet-threading/Worker";
+import {WorkerLike} from "typescript-dotnet-threading/WorkerType";
+import deferImmediate from "typescript-dotnet-threading/deferImmediate";
+import {isNodeJS} from "typescript-dotnet-core/Environment";
+import ObjectPool from "typescript-dotnet-core/Disposable/ObjectPool";
+import IMap from "typescript-dotnet-core/IMap";
 
 declare const navigator:any;
 declare const __dirname:string;
@@ -115,8 +115,7 @@ module workers
 		let pool = workerPools[key];
 		if(!pool)
 		{
-			workerPools[key] = pool = new ObjectPool<WorkerLike>(8);
-			pool.autoClearTimeout = 3000; // Fast cleanup... 1s.
+			workerPools[key] = pool = new ObjectPool<WorkerLike>(undefined, undefined, 8);
 		}
 		return pool;
 	}
@@ -132,7 +131,7 @@ module workers
 			const k = (<any>w).__key;
 			if(k)
 			{
-				getPool(k).add(w);
+				getPool(k).give(w);
 			}
 			else
 			{

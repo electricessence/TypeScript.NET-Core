@@ -3,7 +3,7 @@
  * Licensing: MIT
  */
 
-import {TaskStatus} from "./TaskStatus";
+import TaskStatus from "./TaskStatus";
 
 export default interface ITaskState<T>
 {

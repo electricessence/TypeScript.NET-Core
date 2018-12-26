@@ -4,9 +4,9 @@
  */
 
 import TaskHandlerBase from "./TaskHandlerBase";
-import ArgumentNullException from "../../Exceptions/ArgumentNullException";
-import {Func} from "../../FunctionTypes";
-import Lazy from "../../Lazy";
+import ArgumentNullException from "typescript-dotnet-core/Exceptions/ArgumentNullException";
+import {Func} from "typescript-dotnet-core/FunctionTypes";
+import Lazy from "typescript-dotnet-core/Lazy";
 import ITaskState from "./ITaskState";
 import TaskStatus from "./TaskStatus";
 

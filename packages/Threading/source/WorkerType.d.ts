@@ -3,7 +3,7 @@
  * Licensing: MIT
  */
 
-import {Action} from "../FunctionTypes";
+import {Action} from "typescript-dotnet-core/FunctionTypes";
 
 export declare interface WorkerLike
 {

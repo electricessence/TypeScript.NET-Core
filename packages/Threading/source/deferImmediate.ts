@@ -4,14 +4,14 @@
  * Based on code from: https://github.com/kriskowal/q
  */
 
-import Type from "../Types";
-import LinkedNodeList from "../Collections/LinkedNodeList";
-import Queue from "../Collections/Queue";
-import {Closure} from "../FunctionTypes";
-import {ILinkedNode} from "../Collections/ILinkedListNode";
+import Type from "typescript-dotnet-core/Types";
+import LinkedNodeList from "typescript-dotnet-core/Collections/LinkedNodeList";
+import Queue from "typescript-dotnet-core/Collections/Queue";
+import {Closure} from "typescript-dotnet-core/FunctionTypes";
+import {ILinkedNode} from "typescript-dotnet-core/Collections/ILinkedListNode";
 import ICancellable from "./ICancellable";
-import ObjectPool from "../Disposable/ObjectPool";
-import {isNodeJS} from "../Environment";
+import ObjectPool from "typescript-dotnet-core/Disposable/ObjectPool";
+import {isNodeJS} from "typescript-dotnet-core/Environment";
 
 declare module process
 {
@@ -47,7 +47,7 @@ function flush():void
 {
 	/* jshint loopfunc: true */
 	let entry:ITaskQueueEntry|null;
-	while(entry = immediateQueue.first)
+	while((entry = immediateQueue.first))
 	{
 		let {task, domain, context, args} = entry;
 		entry.canceller();
@@ -70,7 +70,7 @@ const immediateQueue = new LinkedNodeList<ITaskQueueEntry>();
 // queue for late tasks, used by unhandled rejection tracking
 const laterQueue = new Queue<Closure>();
 
-const entryPool = new ObjectPool<ITaskQueueEntry>(40,
+const entryPool = new ObjectPool<ITaskQueueEntry>(
 	() => <any>{},
 	(o:any) =>
 	{
@@ -80,7 +80,8 @@ const entryPool = new ObjectPool<ITaskQueueEntry>(40,
 		if(o.args) o.args.length = 0;
 		o.args = null;
 		o.canceller = null;
-	});
+	},
+	40);
 
 function runSingle(task:Function, domain?:IDomain, context?:any, params?:any[]):void
 {
@@ -160,7 +161,7 @@ export function deferImmediate(task:Closure|Function, context?:any, args?:any[])
 	{
 		if(!entry) return false;
 		let r = Boolean(immediateQueue.removeNode(entry));
-		entryPool.add(entry);
+		entryPool.give(entry);
 		return r;
 	};
 

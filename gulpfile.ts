@@ -70,7 +70,7 @@ function setupDist(dist:string)
 			packageFiles));
 }
 
-const packages = ["Core", "Events", "Observables"];// readdirSync(PACKAGES);
+const packages = ["Core", "Events", "Observables", "Threading", "Promises"];// readdirSync(PACKAGES);
 task(RENDER_PACKAGES,
 	parallel(packages.map(setupDist)));
 

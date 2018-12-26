@@ -45,7 +45,7 @@ function setupDist(dist) {
         .pipe(gulp_1.dest(distFolder)));
     return gulp_1.series(cleanTask, gulp_1.parallel(tsTask, copyDefTask, packageFiles));
 }
-const packages = ["Core", "Events", "Observables"]; // readdirSync(PACKAGES);
+const packages = ["Core", "Events", "Observables", "Threading", "Promises"]; // readdirSync(PACKAGES);
 gulp_1.task(RENDER_PACKAGES, gulp_1.parallel(packages.map(setupDist)));
 gulp_1.task(REMOVE_SOURCE_JAVASCRIPT, () => gulp_1.src(PACKAGES + "*/source/**/*.js").pipe(clean()));
 exports.default = gulp_1.parallel(RENDER_PACKAGES);

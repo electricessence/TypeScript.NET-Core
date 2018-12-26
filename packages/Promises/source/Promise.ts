@@ -10,17 +10,17 @@
  * https://github.com/kriskowal/q
  */
 
-import Type from "../Types";
-import deferImmediate from "../Threading/deferImmediate";
-import DisposableBase from "../Disposable/DisposableBase";
-import InvalidOperationException from "../Exceptions/InvalidOperationException";
-import ArgumentException from "../Exceptions/ArgumentException";
-import ArgumentNullException from "../Exceptions/ArgumentNullException";
-import ObjectPool from "../Disposable/ObjectPool";
-import Set from "../Collections/Set";
-import defer from "../Threading/defer";
-import ObjectDisposedException from "../Disposable/ObjectDisposedException";
-import {Closure, Selector} from "../FunctionTypes";
+import Type from "typescript-dotnet-core/Types";
+import deferImmediate from "typescript-dotnet-threading/deferImmediate";
+import DisposableBase from "typescript-dotnet-core/Disposable/DisposableBase";
+import InvalidOperationException from "typescript-dotnet-core/Exceptions/InvalidOperationException";
+import ArgumentException from "typescript-dotnet-core/Exceptions/ArgumentException";
+import ArgumentNullException from "typescript-dotnet-core/Exceptions/ArgumentNullException";
+import ObjectPool from "typescript-dotnet-core/Disposable/ObjectPool";
+import Set from "typescript-dotnet-core/Collections/Set";
+import defer from "typescript-dotnet-threading/defer";
+import ObjectDisposedException from "typescript-dotnet-core/Disposable/ObjectDisposedException";
+import {Closure, Selector} from "typescript-dotnet-core/FunctionTypes";
 
 const VOID0:any = void 0, NULL:any = null, PROMISE = "Promise", PROMISE_STATE = PROMISE + "State",
       THEN                                                                    = "then", TARGET                                                   = "target";
@@ -1060,11 +1060,11 @@ module pools
 		function getPool()
 		{
 			return pool
-				|| (pool = new ObjectPool<IPromiseCallbacks<any>>(40, factory, c => {
+				|| (pool = new ObjectPool<IPromiseCallbacks<any>>(factory, c => {
 					c.onFulfilled = NULL;
 					c.onRejected = NULL;
 					c.promise = NULL;
-				}));
+				},40));
 		}
 
 		function factory():IPromiseCallbacks<any>
@@ -1091,7 +1091,7 @@ module pools
 
 		export function recycle<T>(c:IPromiseCallbacks<T>):void
 		{
-			getPool().add(c);
+			getPool().give(c);
 		}
 	}
 

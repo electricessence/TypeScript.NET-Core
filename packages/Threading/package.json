@@ -1,5 +1,5 @@
 {
-  "name": "typescript-dotnet-observables",
+  "name": "typescript-dotnet-threading",
   "version": "1.0.2-preview",
   "license": "MIT",
   "author": "electricessence <npm@electrified.net>",
@@ -21,10 +21,14 @@
     ".NET",
     "dotnet",
     "TypeScript.NET",
-    "typescript-dotnet"
+    "typescript-dotnet",
+    "defer",
+    "worker",
+    "task"
   ],
   "dependencies": {
     "tslib": "^1.9.3",
-    "typescript-dotnet-core": "^1.0.2-preview"
+    "typescript-dotnet-core": "^1.0.2-preview",
+    "typescript-dotnet-observables": "^1.0.2-preview"
   }
 }

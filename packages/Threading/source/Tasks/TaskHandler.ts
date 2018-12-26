@@ -4,10 +4,10 @@
  */
 
 import TaskHandlerBase from "./TaskHandlerBase";
-import ArgumentNullException from "../../Exceptions/ArgumentNullException";
-import {Closure} from "../../FunctionTypes";
+import ArgumentNullException from "typescript-dotnet-core/Exceptions/ArgumentNullException";
+import {Closure} from "typescript-dotnet-core/FunctionTypes";
 
-export class TaskHandler extends TaskHandlerBase
+export default class TaskHandler extends TaskHandlerBase
 {
 
 	constructor(private readonly _action:Closure)
@@ -27,5 +27,3 @@ export class TaskHandler extends TaskHandlerBase
 		(<any>this)._action = null;
 	}
 }
-
-export default TaskHandler;

@@ -4,10 +4,10 @@
  */
 
 import {PromiseBase, TSDNPromise} from "./Promise";
-import {Closure} from "../FunctionTypes";
-import ICancellable from "../Threading/ICancellable";
-import defer from "../Threading/defer";
-import ArgumentNullException from "../Exceptions/ArgumentNullException";
+import {Closure} from "typescript-dotnet-core/FunctionTypes";
+import ICancellable from "typescript-dotnet-threading/ICancellable";
+import defer from "typescript-dotnet-threading/defer";
+import ArgumentNullException from "typescript-dotnet-core/Exceptions/ArgumentNullException";
 
 const VOID0:any = void 0;
 

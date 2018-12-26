@@ -4,7 +4,7 @@
  */
 
 import ICancellable from "./ICancellable";
-import {Closure, Func} from "../FunctionTypes";
+import {Closure, Func} from "typescript-dotnet-core/FunctionTypes";
 
 abstract class DeferBase implements ICancellable
 {
