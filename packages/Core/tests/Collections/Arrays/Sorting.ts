@@ -1,14 +1,14 @@
 ///<reference types="node"/>
 import * as assert from "assert";
-import {Selector} from "../../../../../dist/commonjs/System/FunctionTypes";
-import {areEqual} from "../../../../../dist/commonjs/System/Collections/Array/Compare";
-import {compare} from "../../../../../dist/commonjs/System/Compare";
-import quickSort from "../../../../../dist/commonjs/System/Collections/Array/Sorting/quickSort";
-import mergeSort from "../../../../../dist/commonjs/System/Collections/Array/Sorting/mergeSort";
+import {Selector} from "../../../dist/FunctionTypes";
+import {areEqual} from "../../../dist/Collections/Array/Compare";
+import {compare} from "../../../dist/Compare";
+import quickSort from "../../../dist/Collections/Array/Sorting/quickSort";
+import mergeSort from "../../../dist/Collections/Array/Sorting/mergeSort";
 import insertionSort
-	from "../../../../../dist/commonjs/System/Collections/Array/Sorting/insertionSort";
-import Random from "../../../../../dist/commonjs/System/Random";
-import {ArraySort} from "../../../../../dist/commonjs/System/Collections/Array/Sort";
+	from "../../../dist/Collections/Array/Sorting/insertionSort";
+import Random from "../../../dist/Random";
+import {ArraySort} from "../../../dist/Collections/Array/Sort";
 
 const performanceCheck = false;  // Change to true to performance test/log
 

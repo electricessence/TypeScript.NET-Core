@@ -1,6 +1,6 @@
 ///<reference types="node"/>
 import * as assert from "assert";
-import * as ArrayCompare from "../../../../../dist/commonjs/System/Collections/Array/Compare";
+import * as ArrayCompare from "../../../dist/Collections/Array/Compare";
 
 const a1 = [1,2,3];
 const a2 = [1,2,3];

@@ -9,7 +9,7 @@ import * as ts from "gulp-typescript";
 import * as sourcemaps from "gulp-sourcemaps";
 import * as uglify from "gulp-uglify";
 import * as merge from "merge2";
-import {readdirSync, lstatSync} from "fs";
+import {readdirSync, existsSync} from "fs";
 
 const PACKAGES = "./packages/";
 const RENDER_PACKAGES = "Render Packages";
@@ -25,7 +25,7 @@ function setupDist(dist:string)
 		cleanTask    = distFolder + " [ Clean ]",
 		tsTask       = localPackage + " [ TS Compile ]",
 		copyDefTask  = distFolder + " [ Copy Definitions ]",
-		packageFiles = distFolder + " [ Copy Package Files ]"
+		packageFiles = distFolder + " [ Copy Package Files ]";
 
 	const tsProject = ts.createProject(localPackage + 'tsconfig.json');
 
@@ -60,7 +60,7 @@ function setupDist(dist:string)
 			localPackage + "package.json",
 			localPackage + "README*",
 			"LICENSE*"
-		])
+			])
 			.pipe(dest(distFolder)));
 
 	return series(cleanTask,
@@ -72,7 +72,9 @@ function setupDist(dist:string)
 
 const packages = readdirSync(PACKAGES);
 task(RENDER_PACKAGES,
-	parallel(packages.filter(d=>lstatSync(PACKAGES+d).isDirectory()).map(setupDist)));
+	parallel(packages
+		.filter(d => existsSync(PACKAGES + d + "/package.json"))
+		.map(setupDist)));
 
 task(REMOVE_SOURCE_JAVASCRIPT,
 	() => src(PACKAGES + "*/source/**/*.js").pipe(clean()));

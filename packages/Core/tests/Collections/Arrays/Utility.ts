@@ -1,8 +1,8 @@
 ///<reference types="node"/>
 import * as assert from "assert";
-import * as Arrays from "../../../../../dist/commonjs/System/Collections/Array/Compare";
-import * as ArrayUtility from "../../../../../dist/commonjs/System/Collections/Array/Utility";
-import Stopwatch from "../../../../../dist/commonjs/System/Diagnostics/Stopwatch";
+import * as Arrays from "../../../dist/Collections/Array/Compare";
+import * as ArrayUtility from "../../../dist/Collections/Array/Utility";
+import Stopwatch from "../../../dist/Time/Stopwatch";
 
 
 // Min/Max tests...
