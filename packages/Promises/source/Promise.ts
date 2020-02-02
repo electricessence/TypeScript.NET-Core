@@ -30,7 +30,7 @@ function isPromise<T>(value:any):value is PromiseLike<T>
 	return Type.hasMemberOfType(value, THEN, Type.FUNCTION);
 }
 
-export type Resolver = Selector<TSDNPromise.Resolution<any>,any> | null | undefined;
+export type Resolver = Selector<TSDNPromise.Resolution<any>, any> | null | undefined;
 
 function resolve<T>(
 	value:TSDNPromise.Resolution<T>, resolver:Resolver,
@@ -993,6 +993,7 @@ export class PromiseCollection<T>
 		this.throwIfDisposed();
 		return TSDNPromise.wrap<U>(this._source
 			.reduce(
+				// @ts-ignore
 				(
 					previous:PromiseLike<U>,
 					current:PromiseLike<T>,
@@ -1064,7 +1065,7 @@ module pools
 					c.onFulfilled = NULL;
 					c.onRejected = NULL;
 					c.promise = NULL;
-				},40));
+				}, 40));
 		}
 
 		function factory():IPromiseCallbacks<any>
@@ -1218,7 +1219,7 @@ export module TSDNPromise
 			};
 
 			let onFulfill = (v:any, i:number) => {
-				if(resolve)
+				if(resolve!=null)
 				{
 					result[i] = v;
 					remaining.remove(i);

@@ -104,6 +104,7 @@ export function format(source:string, ...args:any[])
 
 //
 
+// noinspection SpellCheckingInspection
 /**
  * This takes a string and replaces '{string}' with the respected parameter.
  * Also allows for passing an array in order to use '{n}' notation.
@@ -135,7 +136,7 @@ export function supplant(source:string, params:{[key:string]:any}|any[]):string
 					return r;
 				default:
 					return (r && Type.hasMemberOfType(r, "toString", Type.FUNCTION))
-						? r.toString()
+						? (<any>r).toString()
 						: a;
 			}
 		}
