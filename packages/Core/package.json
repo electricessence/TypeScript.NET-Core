@@ -1,6 +1,6 @@
 {
   "name": "typescript-dotnet-core",
-  "version": "1.0.4-preview",
+  "version": "1.0.6-preview",
   "license": "MIT",
   "author": "electricessence <npm@electrified.net>",
   "description": "A the core classes and utilities of a JavaScript-Friendly .NET Based TypeScript Library.",

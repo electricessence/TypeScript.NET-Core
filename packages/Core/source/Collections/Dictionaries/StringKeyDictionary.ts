@@ -22,10 +22,10 @@ extends DictionaryBase<string, TValue> implements IStringKeyDictionary<TValue>
 	private _count:number = 0;
 	private readonly _map:IMap<TValue> = {};
 
-	protected _getEntry(key:string):KeyValuePair<string,TValue>|null
+	protected _getEntry(key:string):KeyValuePair<string,TValue>|undefined
 	{
 		return !this.containsKey(key)
-			? null : {
+			? VOID0 : {
 			key: key,
 			value: this.getAssuredValue(key)
 		}

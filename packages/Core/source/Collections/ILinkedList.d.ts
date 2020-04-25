@@ -10,10 +10,10 @@ import {IEnumerateEach} from "./Enumeration/IEnumerateEach";
 
 export interface ILinkedNodeList<TNode extends ILinkedNode<TNode>>
 {
-	first:TNode | null;
-	last:TNode | null;
+	first:TNode | undefined;
+	last:TNode | undefined;
 
-	getNodeAt(index:number):TNode | null;
+	getNodeAt(index:number):TNode | undefined;
 	removeNode(node:TNode):boolean;
 }
 
@@ -22,12 +22,12 @@ extends ILinkedNodeList<ILinkedListNode<T>>,
 	ICollection<T>,
 	IEnumerateEach<T>
 {
-	first:ILinkedListNode<T> | null;
-	last:ILinkedListNode<T> | null;
+	first:ILinkedListNode<T> | undefined;
+	last:ILinkedListNode<T> | undefined;
 
 	getValueAt(index:number):T | undefined;
-	find(entry:T):ILinkedListNode<T> | null;
-	findLast(entry:T):ILinkedListNode<T> | null;
+	find(entry:T):ILinkedListNode<T> | undefined;
+	findLast(entry:T):ILinkedListNode<T> | undefined;
 	addFirst(entry:T):void;
 	addLast(entry:T):void;
 	removeFirst():void;

@@ -33,8 +33,8 @@ class HashEntry<TKey, TValue>
 	constructor(
 		public key:TKey,
 		public value:TValue,
-		public previous?:IHashEntry<TKey, TValue> | null,
-		public next?:IHashEntry<TKey, TValue> | null)
+		public previous?:IHashEntry<TKey, TValue>,
+		public next?:IHashEntry<TKey, TValue>)
 	{
 
 	}
@@ -88,10 +88,10 @@ export class Dictionary<TKey, TValue>
 
 	private _getBucket(
 		hash:string | number | symbol,
-		createIfMissing?:boolean):HashEntryLinkedList<TKey, TValue> | null
+		createIfMissing?:boolean):HashEntryLinkedList<TKey, TValue> | undefined
 	{
 		if(hash==null || !createIfMissing && !this.getCount())
-			return null;
+			return VOID0;
 
 		if(!Type.isPrimitiveOrSymbol(hash))
 			console.warn("Key type not indexable and could cause Dictionary to be extremely slow.");
@@ -104,16 +104,16 @@ export class Dictionary<TKey, TValue>
 				= bucket
 				= linkedNodeList();
 
-		return bucket || null;
+		return bucket;
 	}
 
 	private _getBucketEntry(
 		key:TKey,
 		hash?:string | number | symbol,
-		bucket?:HashEntryLinkedList<TKey, TValue> | null):IHashEntry<TKey, IHashEntry<TKey, TValue>> | null
+		bucket?:HashEntryLinkedList<TKey, TValue>):IHashEntry<TKey, IHashEntry<TKey, TValue>> | undefined
 	{
 		if(key==null || !this.getCount())
-			return null;
+			return VOID0;
 
 		const _          = this,
 		      comparer   = _._keyGenerator,
@@ -128,7 +128,7 @@ export class Dictionary<TKey, TValue>
 			);
 	}
 
-	protected _getEntry(key:TKey):IHashEntry<TKey, TValue> | null
+	protected _getEntry(key:TKey):IHashEntry<TKey, TValue> | undefined
 	{
 		const e = this._getBucketEntry(key);
 		return e && e.value;
@@ -163,7 +163,6 @@ export class Dictionary<TKey, TValue>
 				{
 					delete buckets[hash];
 					linkedNodeList(b);
-					bucket = null;
 				}
 
 				if(x!==y) throw "Entries and buckets are out of sync.";
@@ -220,7 +219,7 @@ export class Dictionary<TKey, TValue>
 		const _ = this;
 		_.throwIfDisposed();
 
-		let ver:number, currentEntry:IHashEntry<TKey, TValue> | null;
+		let ver:number, currentEntry:IHashEntry<TKey, TValue> | undefined;
 		return new FiniteEnumeratorBase<KeyValuePair<TKey, TValue>>(
 			() => {
 				_.throwIfDisposed();
@@ -233,7 +232,7 @@ export class Dictionary<TKey, TValue>
 					_.throwIfDisposed();
 					_.assertVersion(ver);
 					const result = {key: currentEntry.key, value: currentEntry.value};
-					currentEntry = currentEntry.next || null;
+					currentEntry = currentEntry.next;
 					return yielder.yieldReturn(result);
 				}
 				return yielder.yieldBreak();

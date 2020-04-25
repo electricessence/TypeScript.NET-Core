@@ -118,7 +118,7 @@ extends CollectionBase<KeyValuePair<TKey,TValue>> implements IDictionary<TKey, T
 		return _.setValue(key, value);
 	}
 
-	protected abstract _getEntry(key:TKey):KeyValuePair<TKey,TValue>|null;
+	protected abstract _getEntry(key:TKey):KeyValuePair<TKey,TValue>|undefined;
 
 	abstract getValue(key:TKey):TValue|undefined;
 

@@ -16,7 +16,9 @@ import {FiniteIEnumerator} from "./Enumeration/IEnumerator";
 import {ActionWithIndex, PredicateWithIndex, Selector, SelectorWithIndex} from "../FunctionTypes";
 import ArrayLikeWritable from "./Array/ArrayLikeWritable";
 import IRecyclable from "../Disposable/IRecyclable";
+import Exception from "../Exception";
 
+const VOID0:undefined = void 0;
 
 /*****************************
  * IMPORTANT NOTES ABOUT PERFORMANCE:
@@ -37,24 +39,21 @@ import IRecyclable from "../Disposable/IRecyclable";
  * The count (or length) of this LinkedNodeList is not tracked since it could be corrupted at any time.
  */
 export class LinkedNodeList<TNode extends ILinkedNode<TNode>>
-implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclable
+	implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclable
 {
-
-	private _first:TNode|null;
-	private _last:TNode|null;
+	private _first:TNode | undefined;
+	private _last:TNode | undefined;
 	unsafeCount:number;
 
 	constructor()
 	{
-		this._first = null;
-		this._last = null;
 		this.unsafeCount = 0;
 		this._version = 0;
 	}
 
 	private _version:number;
 
-	assertVersion(version:number):true|never
+	assertVersion(version:number):true | never
 	{
 		if(version!==this._version)
 			throw new InvalidOperationException("Collection was modified.");
@@ -64,7 +63,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	/**
 	 * The first node.  Will be null if the collection is empty.
 	 */
-	get first():TNode|null
+	get first():TNode | undefined
 	{
 		return this._first;
 	}
@@ -72,7 +71,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	/**
 	 * The last node.
 	 */
-	get last():TNode|null
+	get last():TNode | undefined
 	{
 		return this._last;
 	}
@@ -85,7 +84,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	get count():number
 	{
 
-		let next:TNode|null|undefined = this._first;
+		let next = this._first;
 
 		let i:number = 0;
 		while(next)
@@ -100,20 +99,21 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	// Note, no need for 'useCopy' since this avoids any modification conflict.
 	// If iterating over a arrayCopy is necessary, a arrayCopy should be made manually.
 	forEach(
-		action:ActionWithIndex<TNode>, ignoreVersioning?:boolean):number
+		action:ActionWithIndex<TNode>, ignoreVersion?:boolean):number
 	forEach(
-		action:PredicateWithIndex<TNode>, ignoreVersioning?:boolean):number
+		action:PredicateWithIndex<TNode>, ignoreVersion?:boolean):number
 	forEach(
-		action:ActionWithIndex<TNode> | PredicateWithIndex<TNode>, ignoreVersioning?:boolean):number
+		action:ActionWithIndex<TNode> | PredicateWithIndex<TNode>, ignoreVersion?:boolean):number
 	{
 		const _ = this;
-		let current:TNode|null|undefined = null,
-		    next:TNode|null|undefined = _.first; // Be sure to track the next node so if current node is removed.
+		let current:TNode | undefined = VOID0,
+		    next                      = _.first; // Be sure to track the next node so if current node is removed.
 
 		const version = _._version;
 		let index:number = 0;
-		do {
-			if(!ignoreVersioning) _.assertVersion(version);
+		do
+		{
+			if(!ignoreVersion) _.assertVersion(version);
 			current = next;
 			next = current && current.next;
 		}
@@ -123,15 +123,14 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 		return index;
 	}
 
-	map<T>(selector:Selector<TNode,T>):T[]
-	map<T>(selector:SelectorWithIndex<TNode,T>):T[]
-	map<T>(selector:SelectorWithIndex<TNode,T>):T[]
+	map<T>(selector:Selector<TNode, T>):T[]
+	map<T>(selector:SelectorWithIndex<TNode, T>):T[]
+	map<T>(selector:SelectorWithIndex<TNode, T>):T[]
 	{
 		if(!selector) throw new ArgumentNullException('selector');
 
 		const result:T[] = [];
-		this.forEach((node, i)=>
-		{
+		this.forEach((node, i) => {
 			result.push(selector(node, i));
 		});
 		return result;
@@ -143,30 +142,30 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 */
 	clear():number
 	{
-		let n:TNode|null|undefined, cF:number = 0, cL:number = 0;
+		let n = this._first;
+		let cF:number = 0, cL:number = 0;
 
 		// First, clear in the forward direction.
-		n = this._first;
-		this._first = null;
+		this._first = VOID0;
 
 		while(n)
 		{
 			cF++;
 			let current = n;
 			n = n.next;
-			current.next = null;
+			current.next = VOID0;
 		}
 
 		// Last, clear in the reverse direction.
 		n = this._last;
-		this._last = null;
+		this._last = VOID0;
 
 		while(n)
 		{
 			cL++;
 			let current = n;
 			n = n.previous;
-			current.previous = null;
+			current.previous = VOID0;
 		}
 
 		if(cF!==cL) console.warn('LinkedNodeList: Forward versus reverse count does not match when clearing. Forward: ' + cF + ", Reverse: " + cL);
@@ -200,6 +199,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 */
 	contains(node:TNode):boolean
 	{
+		if(!node) throw new ArgumentNullException('node');
 		return this.indexOf(node)!= -1;
 	}
 
@@ -208,28 +208,27 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 * Gets the index of a particular node.
 	 * @param index
 	 */
-	getNodeAt(index:number):TNode|null
+	getNodeAt(index:number):TNode | undefined
 	{
 		if(index<0)
-			return null;
+			return VOID0;
 
 		let next = this._first;
 
 		let i:number = 0;
 		while(next && i++<index)
 		{
-			next = next.next || null;
+			next = next.next;
 		}
 
 		return next;
 
 	}
 
-	find(condition:PredicateWithIndex<TNode>):TNode|null
+	find(condition:PredicateWithIndex<TNode>):TNode | undefined
 	{
-		let node:TNode|null = null;
-		this.forEach((n, i)=>
-		{
+		let node:TNode | undefined = VOID0;
+		this.forEach((n, i) => {
 			if(condition(n, i))
 			{
 				node = n;
@@ -250,10 +249,11 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 		{
 
 			let index = 0;
-			let c:TNode|null|undefined,
-			    n:TNode|null|undefined = this._first;
+			let c:TNode | undefined,
+			    n = this._first;
 
-			do {
+			do
+			{
 				c = n;
 				if(c===node) return index;
 				index++;
@@ -265,25 +265,6 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	}
 
 	/**
-	 * Removes the first node and returns true if successful.
-	 * @returns {boolean}
-	 */
-	removeFirst():boolean
-	{
-		return !!this._first && this.removeNode(this._first);
-	}
-
-	/**
-	 * Removes the last node and returns true if successful.
-	 * @returns {boolean}
-	 */
-	removeLast():boolean
-	{
-		return !!this._last && this.removeNode(this._last);
-	}
-
-
-	/**
 	 * Removes the specified node.
 	 * Returns true if successful and false if not found (already removed).
 	 * @param node
@@ -291,12 +272,11 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 */
 	removeNode(node:TNode):boolean
 	{
-		if(node==null)
-			throw new ArgumentNullException('node');
+		if(!node) throw new ArgumentNullException('node');
 
 		const _ = this;
-		const prev:TNode|null = node.previous || null,
-		      next:TNode|null = node.next || null;
+		const prev = node.previous,
+		      next = node.next;
 
 		let a:boolean = false,
 		    b:boolean = false;
@@ -324,11 +304,57 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 		{
 			_._version++;
 			_.unsafeCount--;
-			node.previous = null;
-			node.next = null;
+			node.previous = VOID0;
+			node.next = VOID0;
 		}
 		return removed;
 
+	}
+
+	/**
+	 * Removes the first node and returns it if successful.
+	 */
+	takeFirst():TNode | undefined
+	{
+		const node = this._first;
+		if(!node) return VOID0;
+		if(node.previous)
+			throw new Exception("Collection is corrupted: first node has previous node.");
+		if(!this.removeNode(node))
+			throw new Exception("Collection is corrupted: unable to remove first node.");
+		return node;
+	}
+
+	/**
+	 * Removes the last node and returns it if successful.
+	 */
+	takeLast():TNode | undefined
+	{
+		const node = this._last;
+		if(!node) return VOID0;
+		if(node.next)
+			throw new Exception("Collection is corrupted: last node has next node.");
+		if(!this.removeNode(node))
+			throw new Exception("Collection is corrupted: unable to remove last node.");
+		return node;
+	}
+
+	/**
+	 * Removes the first node and returns true if successful.
+	 * @returns {boolean}
+	 */
+	removeFirst():boolean
+	{
+		return !!this.takeFirst();
+	}
+
+	/**
+	 * Removes the last node and returns true if successful.
+	 * @returns {boolean}
+	 */
+	removeLast():boolean
+	{
+		return !!this.takeLast();
 	}
 
 	/**
@@ -349,7 +375,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 * @param before
 	 * @returns {LinkedNodeList}
 	 */
-	addNodeBefore(node:TNode, before:TNode|null = null):this
+	addNodeBefore(node:TNode, before?:TNode):this
 	{
 		assertValidDetached(node);
 
@@ -388,7 +414,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 * @param after
 	 * @returns {LinkedNodeList}
 	 */
-	addNodeAfter(node:TNode, after:TNode|null = null):this
+	addNodeAfter(node:TNode, after?:TNode):this
 	{
 		assertValidDetached(node);
 		const _ = this;
@@ -427,10 +453,6 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 	 */
 	replace(node:TNode, replacement:TNode):this
 	{
-
-		if(node==null)
-			throw new ArgumentNullException('node');
-
 		if(node==replacement) return this;
 
 		assertValidDetached(replacement, 'replacement');
@@ -455,20 +477,17 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 
 		if(!list) throw new ArgumentNullException('list');
 
-		let current:ILinkedNodeWithValue<T>|null|undefined,
-		    next:ILinkedNodeWithValue<T>|null|undefined,
+		let current:ILinkedNodeWithValue<T> | undefined,
+		    next:ILinkedNodeWithValue<T> |  undefined,
 		    version:number;
 
 		return new FiniteEnumeratorBase<T>(
-			() =>
-			{
+			() => {
 				// Initialize anchor...
-				current = null;
 				next = list.first;
 				version = list._version;
 			},
-			(yielder)=>
-			{
+			(yielder) => {
 				if(next)
 				{
 					list.assertVersion(version);
@@ -483,7 +502,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 		);
 	}
 
-	static copyValues<T,TDestination extends ArrayLikeWritable<any>>(
+	static copyValues<T, TDestination extends ArrayLikeWritable<any>>(
 		list:LinkedNodeList<ILinkedNodeWithValue<T>>,
 		array:TDestination,
 		index:number = 0):TDestination
@@ -493,8 +512,7 @@ implements ILinkedNodeList<TNode>, IEnumerateEach<TNode>, IDisposable, IRecyclab
 			if(!array) throw new ArgumentNullException('array');
 
 			list.forEach(
-				(node, i) =>
-				{
+				(node, i) => {
 					array[index + i] = node.value;
 				}
 			);
@@ -509,8 +527,7 @@ function assertValidDetached<TNode extends ILinkedNode<TNode>>(
 	node:TNode,
 	propName:string = 'node')
 {
-
-	if(node==null)
+	if(!node)
 		throw new ArgumentNullException(propName);
 
 	if(node.next || node.previous)

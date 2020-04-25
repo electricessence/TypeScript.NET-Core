@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2015-2019 Oren Ferrari (electricessence)
+Copyright (c) 2015-2020 Oren Ferrari (electricessence)
 Some content within is based directly from the .NET platform which also is open source via the MIT License.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
