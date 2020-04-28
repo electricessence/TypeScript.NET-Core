@@ -6,6 +6,7 @@
 import DisposableBase from "./Disposable/DisposableBase";
 import {Func} from "./FunctionTypes";
 import ArgumentNullException from "./Exceptions/ArgumentNullException";
+
 const NULL:any = null;
 const NAME:string = "ResolverBase";
 
@@ -15,11 +16,12 @@ const NAME:string = "ResolverBase";
  * we have to prevent getValue from double triggering the value factory (optimistic concurrency)
  * or returning return a value that is intermediate between resolving and resolved.
  */
-export default abstract class ResolverBase<T> extends DisposableBase
+export default abstract class ResolverBase<T>
+	extends DisposableBase
 {
 
-	protected _isValueCreated:boolean|null; // null = 'creating'
-	protected _value:T|undefined;
+	protected _isValueCreated:boolean | null; // null = 'creating'
+	protected _value:T | undefined;
 
 	protected constructor(
 		protected _valueFactory:Func<T>,
@@ -52,16 +54,15 @@ export default abstract class ResolverBase<T> extends DisposableBase
 		if(_._isValueCreated===null)
 			throw new Error("Recursion detected.");
 
-		if(!_._isValueCreated && _._valueFactory)
+		let c:Func<T> = _._valueFactory;
+		if(c && !_._isValueCreated)
 		{
 			_._isValueCreated = null; // Mark this as 'resolving'.
 			try
 			{
-				let c:Func<T>;
-				if(!_._isValueCreated && (c = _._valueFactory))
+				if(c)
 				{
-					_._isValueCreated = null; // Mark this as 'resolving'.
-					if(!this._allowReset) this._valueFactory = NULL;
+					if(!this._allowReset) _._valueFactory = NULL;
 					const v = c();
 					_._value = v;
 					_._error = void 0;

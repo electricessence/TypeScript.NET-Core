@@ -1,6 +1,6 @@
 {
   "name": "typescript-dotnet-events",
-  "version": "1.0.4-preview",
+  "version": "1.0.8-preview",
   "license": "MIT",
   "author": "electricessence <npm@electrified.net>",
   "description": "Basic events/dispatching library.  Part of the TypeScript.NET-Core libraries.",
@@ -24,6 +24,6 @@
   ],
   "dependencies": {
     "tslib": "^1.9.3",
-    "typescript-dotnet-core": "^1.0.4-preview"
+    "typescript-dotnet-core": "^1.0.7-preview"
   }
 }
