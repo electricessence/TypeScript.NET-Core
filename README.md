@@ -3,6 +3,9 @@ TypeScript.NET-Core
 
 ### A JavaScript-Friendly .NET Based TypeScript Library
 
+This library now lives as individual modules here: https://github.com/tsdotnet
+With each module published to NPM as CommonJS and ECMA Script Modules.
+
 Originally: https://github.com/electricessence/TypeScript.NET
 
 <span>Or support by taking this course: https://www.udemy.com/stepping-up-to-typescript-fundamentals/</span>
